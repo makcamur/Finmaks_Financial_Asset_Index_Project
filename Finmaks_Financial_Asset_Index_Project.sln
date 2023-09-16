@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finmaks_Financial_Asset_Ind
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finmaks_Financial_Asset_Index_Project.Utility", "Finmaks_Financial_Asset_Index_Project.Utility\Finmaks_Financial_Asset_Index_Project.Utility.csproj", "{899DAF00-D657-418A-B45D-6B0C262A1563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finmaks_Financial_Asset_Index_Project.Api", "Finmaks_Financial_Asset_Index_Project.Api\Finmaks_Financial_Asset_Index_Project.Api.csproj", "{CDE7E9CF-080E-462C-B036-6008ACCBF2FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finmaks_Financial_Asset_Index_Project.Api", "Finmaks_Financial_Asset_Index_Project.Api\Finmaks_Financial_Asset_Index_Project.Api.csproj", "{CDE7E9CF-080E-462C-B036-6008ACCBF2FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F58D6FE-8041-493E-B039-B181F4583A28}"
+	ProjectSection(SolutionItems) = preProject
+		a.json = a.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

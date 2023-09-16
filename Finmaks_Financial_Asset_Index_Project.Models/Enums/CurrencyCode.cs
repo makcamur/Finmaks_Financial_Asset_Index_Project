@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Finmaks_Financial_Asset_Index_Project.Models.Enums
 {
-    public enum AssetType
+    public enum CurrencyCode
     {
         [Description("AMERİKAN DOLARI")]
         USD = 1,

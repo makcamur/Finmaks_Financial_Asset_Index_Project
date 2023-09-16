@@ -1,0 +1,759 @@
+{
+  "ExchangeRates": [
+    {
+      "BaseCurrencyCode": 4,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 16.70953,
+      "CashExchangeRate": 18.11042,
+      "CentralBankChangeRate": 17.14340,
+      "CentralBankExchangeRate": 17.43890,
+      "CrossRate": 1.57900,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 3,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 19.10196,
+      "CashExchangeRate": 20.56013,
+      "CentralBankChangeRate": 19.58820,
+      "CentralBankExchangeRate": 19.82460,
+      "CrossRate": 1.38130,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 34,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 29.58600,
+      "CashExchangeRate": 31.46943,
+      "CentralBankChangeRate": 30.15610,
+      "CentralBankExchangeRate": 30.44090,
+      "CrossRate": 0.89950,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 46,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 3.76973,
+      "CashExchangeRate": 4.01553,
+      "CentralBankChangeRate": 3.88500,
+      "CentralBankExchangeRate": 3.91580,
+      "CrossRate": 7.05220,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 12,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 28.25159,
+      "CashExchangeRate": 29.86314,
+      "CentralBankChangeRate": 28.99800,
+      "CentralBankExchangeRate": 29.11420,
+      "CrossRate": 0.94240,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 23,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 33.00165,
+      "CashExchangeRate": 35.09646,
+      "CentralBankChangeRate": 33.76500,
+      "CentralBankExchangeRate": 34.01570,
+      "CrossRate": 0.80640,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 42,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.17798,
+      "CashExchangeRate": 0.18967,
+      "CentralBankChangeRate": 0.18162,
+      "CentralBankExchangeRate": 0.18420,
+      "CrossRate": 149.14916,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 47,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.44107,
+      "CashExchangeRate": 2.61391,
+      "CentralBankChangeRate": 2.49780,
+      "CentralBankExchangeRate": 2.52220,
+      "CrossRate": 10.89090,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 17,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.25336,
+      "CashExchangeRate": 0.31035,
+      "CentralBankChangeRate": 0.26509,
+      "CentralBankExchangeRate": 0.28113,
+      "CrossRate": 102.13748,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 45,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.35396,
+      "CashExchangeRate": 2.51456,
+      "CentralBankChangeRate": 2.43500,
+      "CentralBankExchangeRate": 2.46760,
+      "CrossRate": 11.26520,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 1,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 26.19937,
+      "CashExchangeRate": 27.72156,
+      "CentralBankChangeRate": 26.64710,
+      "CentralBankExchangeRate": 26.75390,
+      "CrossRate": 1.00000,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 70,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 20.07761,
+      "CashExchangeRate": 22.29851,
+      "CentralBankChangeRate": 21.04029,
+      "CentralBankExchangeRate": 21.12461,
+      "CrossRate": 1.32080,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 51,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1598.92732,
+      "CashExchangeRate": 1791.57855,
+      "CentralBankChangeRate": 1666.93655,
+      "CentralBankExchangeRate": 1673.61754,
+      "CrossRate": 0.01640,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 0,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1020.46591,
+      "CashExchangeRate": 1135.37341,
+      "CentralBankChangeRate": 1055.61254,
+      "CentralBankExchangeRate": 1059.84337,
+      "CrossRate": 0.02600,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 72,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 805.08868,
+      "CashExchangeRate": 873.80062,
+      "CentralBankChangeRate": 842.33109,
+      "CentralBankExchangeRate": 845.70710,
+      "CrossRate": 0.03290,
+      "CurrentDate": "2023-09-01T08:06:31"
+    },
+    {
+      "BaseCurrencyCode": 4,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 16.70992,
+      "CashExchangeRate": 18.11059,
+      "CentralBankChangeRate": 17.14920,
+      "CentralBankExchangeRate": 17.44490,
+      "CrossRate": 1.57950,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 3,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 19.10701,
+      "CashExchangeRate": 20.56517,
+      "CentralBankChangeRate": 19.65180,
+      "CentralBankExchangeRate": 19.88900,
+      "CrossRate": 1.38140,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 34,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 29.58590,
+      "CashExchangeRate": 31.46461,
+      "CentralBankChangeRate": 30.11190,
+      "CentralBankExchangeRate": 30.39620,
+      "CrossRate": 0.89980,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 46,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 3.77302,
+      "CashExchangeRate": 4.01907,
+      "CentralBankChangeRate": 3.87390,
+      "CentralBankExchangeRate": 3.90460,
+      "CrossRate": 7.04830,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 12,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 28.27936,
+      "CashExchangeRate": 29.89200,
+      "CentralBankChangeRate": 28.91750,
+      "CentralBankExchangeRate": 29.03340,
+      "CrossRate": 0.94180,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 23,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 33.01803,
+      "CashExchangeRate": 35.11634,
+      "CentralBankChangeRate": 33.72870,
+      "CentralBankExchangeRate": 33.97920,
+      "CrossRate": 0.80620,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 42,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.17811,
+      "CashExchangeRate": 0.18981,
+      "CentralBankChangeRate": 0.18234,
+      "CentralBankExchangeRate": 0.18493,
+      "CrossRate": 149.08163,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 47,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.44187,
+      "CashExchangeRate": 2.61437,
+      "CentralBankChangeRate": 2.50600,
+      "CentralBankExchangeRate": 2.53040,
+      "CrossRate": 10.89050,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 17,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.25336,
+      "CashExchangeRate": 0.31048,
+      "CentralBankChangeRate": 0.26541,
+      "CentralBankExchangeRate": 0.28063,
+      "CrossRate": 102.17114,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 45,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.35376,
+      "CashExchangeRate": 2.51447,
+      "CentralBankChangeRate": 2.42210,
+      "CentralBankExchangeRate": 2.45450,
+      "CrossRate": 11.26990,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 1,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 26.20815,
+      "CashExchangeRate": 27.73037,
+      "CentralBankChangeRate": 26.65960,
+      "CentralBankExchangeRate": 26.76650,
+      "CrossRate": 1.00000,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 70,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 20.07851,
+      "CashExchangeRate": 22.30355,
+      "CentralBankChangeRate": 21.10818,
+      "CentralBankExchangeRate": 21.19282,
+      "CrossRate": 1.32120,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 51,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1596.55412,
+      "CashExchangeRate": 1788.92349,
+      "CentralBankChangeRate": 1666.70709,
+      "CentralBankExchangeRate": 1673.39028,
+      "CrossRate": 0.01640,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 0,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1022.17478,
+      "CashExchangeRate": 1137.32090,
+      "CentralBankChangeRate": 1055.79058,
+      "CentralBankExchangeRate": 1060.02411,
+      "CrossRate": 0.02600,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 72,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 805.42491,
+      "CashExchangeRate": 875.64428,
+      "CentralBankChangeRate": 840.72054,
+      "CentralBankExchangeRate": 844.09168,
+      "CrossRate": 0.03290,
+      "CurrentDate": "2023-09-02T08:00:13"
+    },
+    {
+      "BaseCurrencyCode": 4,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 16.70992,
+      "CashExchangeRate": 18.11059,
+      "CentralBankChangeRate": 17.14920,
+      "CentralBankExchangeRate": 17.44490,
+      "CrossRate": 1.57950,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 3,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 19.10701,
+      "CashExchangeRate": 20.56517,
+      "CentralBankChangeRate": 19.65180,
+      "CentralBankExchangeRate": 19.88900,
+      "CrossRate": 1.38140,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 34,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 29.58590,
+      "CashExchangeRate": 31.46461,
+      "CentralBankChangeRate": 30.11190,
+      "CentralBankExchangeRate": 30.39620,
+      "CrossRate": 0.89980,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 46,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 3.77302,
+      "CashExchangeRate": 4.01907,
+      "CentralBankChangeRate": 3.87390,
+      "CentralBankExchangeRate": 3.90460,
+      "CrossRate": 7.04830,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 12,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 28.27936,
+      "CashExchangeRate": 29.89200,
+      "CentralBankChangeRate": 28.91750,
+      "CentralBankExchangeRate": 29.03340,
+      "CrossRate": 0.94180,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 23,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 33.01803,
+      "CashExchangeRate": 35.11634,
+      "CentralBankChangeRate": 33.72870,
+      "CentralBankExchangeRate": 33.97920,
+      "CrossRate": 0.80620,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 42,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.17811,
+      "CashExchangeRate": 0.18981,
+      "CentralBankChangeRate": 0.18234,
+      "CentralBankExchangeRate": 0.18493,
+      "CrossRate": 149.08163,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 47,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.44187,
+      "CashExchangeRate": 2.61437,
+      "CentralBankChangeRate": 2.50600,
+      "CentralBankExchangeRate": 2.53040,
+      "CrossRate": 10.89050,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 17,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.25336,
+      "CashExchangeRate": 0.31048,
+      "CentralBankChangeRate": 0.26541,
+      "CentralBankExchangeRate": 0.28063,
+      "CrossRate": 102.17114,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 45,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.35376,
+      "CashExchangeRate": 2.51447,
+      "CentralBankChangeRate": 2.42210,
+      "CentralBankExchangeRate": 2.45450,
+      "CrossRate": 11.26990,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 1,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 26.20815,
+      "CashExchangeRate": 27.73037,
+      "CentralBankChangeRate": 26.65960,
+      "CentralBankExchangeRate": 26.76650,
+      "CrossRate": 1.00000,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 70,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 20.07851,
+      "CashExchangeRate": 22.30355,
+      "CentralBankChangeRate": 21.10818,
+      "CentralBankExchangeRate": 21.19282,
+      "CrossRate": 1.32120,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 51,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1596.55412,
+      "CashExchangeRate": 1788.92349,
+      "CentralBankChangeRate": 1666.70709,
+      "CentralBankExchangeRate": 1673.39028,
+      "CrossRate": 0.01640,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 0,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1022.17478,
+      "CashExchangeRate": 1137.32090,
+      "CentralBankChangeRate": 1055.79058,
+      "CentralBankExchangeRate": 1060.02411,
+      "CrossRate": 0.02600,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 72,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 805.42491,
+      "CashExchangeRate": 875.64428,
+      "CentralBankChangeRate": 840.72054,
+      "CentralBankExchangeRate": 844.09168,
+      "CrossRate": 0.03290,
+      "CurrentDate": "2023-09-03T08:10:49"
+    },
+    {
+      "BaseCurrencyCode": 4,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 16.72299,
+      "CashExchangeRate": 18.12578,
+      "CentralBankChangeRate": 17.14920,
+      "CentralBankExchangeRate": 17.44490,
+      "CrossRate": 1.58230,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 3,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 19.09760,
+      "CashExchangeRate": 20.55638,
+      "CentralBankChangeRate": 19.65180,
+      "CentralBankExchangeRate": 19.88900,
+      "CrossRate": 1.38550,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 34,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 29.61985,
+      "CashExchangeRate": 31.50269,
+      "CentralBankChangeRate": 30.11190,
+      "CentralBankExchangeRate": 30.39620,
+      "CrossRate": 0.90100,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 46,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 3.77382,
+      "CashExchangeRate": 4.02022,
+      "CentralBankChangeRate": 3.87390,
+      "CentralBankExchangeRate": 3.90460,
+      "CrossRate": 7.06470,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 12,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 28.28046,
+      "CashExchangeRate": 29.89805,
+      "CentralBankChangeRate": 28.91750,
+      "CentralBankExchangeRate": 29.03340,
+      "CrossRate": 0.94410,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 23,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 33.08373,
+      "CashExchangeRate": 35.18546,
+      "CentralBankChangeRate": 33.72870,
+      "CentralBankExchangeRate": 33.97920,
+      "CrossRate": 0.80670,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 42,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.17743,
+      "CashExchangeRate": 0.18910,
+      "CentralBankChangeRate": 0.18234,
+      "CentralBankExchangeRate": 0.18493,
+      "CrossRate": 150.03679,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 47,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.44805,
+      "CashExchangeRate": 2.62116,
+      "CentralBankChangeRate": 2.50600,
+      "CentralBankExchangeRate": 2.53040,
+      "CrossRate": 10.89040,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 17,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.25103,
+      "CashExchangeRate": 0.31059,
+      "CentralBankChangeRate": 0.26541,
+      "CentralBankExchangeRate": 0.28063,
+      "CrossRate": 103.37929,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 45,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.35943,
+      "CashExchangeRate": 2.52145,
+      "CentralBankChangeRate": 2.42210,
+      "CentralBankExchangeRate": 2.45450,
+      "CrossRate": 11.27120,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 1,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 26.17572,
+      "CashExchangeRate": 27.69773,
+      "CentralBankChangeRate": 26.65960,
+      "CentralBankExchangeRate": 26.76650,
+      "CrossRate": 1.00000,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 70,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 19.84574,
+      "CashExchangeRate": 22.10393,
+      "CentralBankChangeRate": 21.10818,
+      "CentralBankExchangeRate": 21.19282,
+      "CrossRate": 1.34000,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 51,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1594.84513,
+      "CashExchangeRate": 1797.51777,
+      "CentralBankChangeRate": 1666.70709,
+      "CentralBankExchangeRate": 1673.39028,
+      "CrossRate": 0.01650,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 0,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1014.72222,
+      "CashExchangeRate": 1134.62709,
+      "CentralBankChangeRate": 1055.79058,
+      "CentralBankExchangeRate": 1060.02411,
+      "CrossRate": 0.02620,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 72,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 797.91297,
+      "CashExchangeRate": 868.81427,
+      "CentralBankChangeRate": 840.72054,
+      "CentralBankExchangeRate": 844.09168,
+      "CrossRate": 0.03330,
+      "CurrentDate": "2023-09-04T08:00:14"
+    },
+    {
+      "BaseCurrencyCode": 4,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 16.58538,
+      "CashExchangeRate": 17.97297,
+      "CentralBankChangeRate": 17.16860,
+      "CentralBankExchangeRate": 17.46460,
+      "CrossRate": 1.59600,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 3,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 19.11621,
+      "CashExchangeRate": 20.57200,
+      "CentralBankChangeRate": 19.56670,
+      "CentralBankExchangeRate": 19.80290,
+      "CrossRate": 1.38470,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 34,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 29.55075,
+      "CashExchangeRate": 31.42602,
+      "CentralBankChangeRate": 30.12380,
+      "CentralBankExchangeRate": 30.40830,
+      "CrossRate": 0.90350,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 46,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 3.76275,
+      "CashExchangeRate": 4.00759,
+      "CentralBankChangeRate": 3.86460,
+      "CentralBankExchangeRate": 3.89520,
+      "CrossRate": 7.08820,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 12,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 28.20483,
+      "CashExchangeRate": 29.80881,
+      "CentralBankChangeRate": 28.84580,
+      "CentralBankExchangeRate": 28.96140,
+      "CrossRate": 0.94710,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 23,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 33.04429,
+      "CashExchangeRate": 35.13542,
+      "CentralBankChangeRate": 33.67860,
+      "CentralBankExchangeRate": 33.92870,
+      "CrossRate": 0.80800,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 42,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.17668,
+      "CashExchangeRate": 0.18826,
+      "CentralBankChangeRate": 0.18155,
+      "CentralBankExchangeRate": 0.18413,
+      "CrossRate": 150.73018,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 47,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.43927,
+      "CashExchangeRate": 2.61107,
+      "CentralBankChangeRate": 2.50390,
+      "CentralBankExchangeRate": 2.52830,
+      "CrossRate": 10.93440,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 17,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 0.24997,
+      "CashExchangeRate": 0.30755,
+      "CentralBankChangeRate": 0.26547,
+      "CentralBankExchangeRate": 0.28020,
+      "CrossRate": 103.86169,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 45,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 2.35028,
+      "CashExchangeRate": 2.51039,
+      "CentralBankChangeRate": 2.41430,
+      "CentralBankExchangeRate": 2.44660,
+      "CrossRate": 11.31960,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 1,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 26.28600,
+      "CashExchangeRate": 27.80857,
+      "CentralBankChangeRate": 26.71630,
+      "CentralBankExchangeRate": 26.82330,
+      "CrossRate": 1.00000,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 70,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 19.60199,
+      "CashExchangeRate": 21.76495,
+      "CentralBankChangeRate": 20.66287,
+      "CentralBankExchangeRate": 20.74563,
+      "CrossRate": 1.35720,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 51,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1592.62711,
+      "CashExchangeRate": 1784.20912,
+      "CentralBankChangeRate": 1667.79528,
+      "CentralBankExchangeRate": 1674.47487,
+      "CrossRate": 0.01650,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 0,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 1018.20148,
+      "CashExchangeRate": 1133.03434,
+      "CentralBankChangeRate": 1055.34754,
+      "CentralBankExchangeRate": 1059.57426,
+      "CrossRate": 0.02610,
+      "CurrentDate": "2023-09-05T08:07:17"
+    },
+    {
+      "BaseCurrencyCode": 72,
+      "ForeignCurrencyCode": 56,
+      "CashChangeRate": 779.88126,
+      "CashExchangeRate": 847.94789,
+      "CentralBankChangeRate": 824.03261,
+      "CentralBankExchangeRate": 827.33290,
+      "CrossRate": 0.03410,
+      "CurrentDate": "2023-09-05T08:07:17"
+    }
+  ],
+  "Header": {
+    "Status": 0,
+    "ResponseCode": "0000",
+    "ResponseMessage": "Ýþlem baþarýlý"
+  }
+}

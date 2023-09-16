@@ -12,7 +12,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Models.Models
         public int Id { get; set; }
         public decimal ExchangeValue { get; set; }
         public DateTime Date { get; set; }
-        public AssetType ExchangeType { get; set; }
+        public CurrencyCode ExchangeType { get; set; }
 
         //navigation property
         public int AssetId { get; set; }
