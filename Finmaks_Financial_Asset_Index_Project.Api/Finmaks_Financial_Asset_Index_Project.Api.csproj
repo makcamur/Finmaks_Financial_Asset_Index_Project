@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Finmaks_Financial_Asset_Index_Project.Models\Finmaks_Financial_Asset_Index_Project.Models.csproj" />
+    <ProjectReference Include="..\Finmaks_Financial_Asset_Index_Project.Models\Finmaks_Financial_Asset_Index_Project.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

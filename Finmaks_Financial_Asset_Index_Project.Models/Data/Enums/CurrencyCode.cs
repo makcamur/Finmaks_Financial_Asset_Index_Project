@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Finmaks_Financial_Asset_Index_Project.Models.Enums
+namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Enums
 {
     public enum CurrencyCode
     {
