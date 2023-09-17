@@ -1,5 +1,6 @@
 ﻿using Finmaks_Financial_Asset_Index_Project.Api.Services.Abstract;
 using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
@@ -38,5 +39,9 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                     $"Error occured while getting data from Finmaks API. Status Code: {response.StatusCode} - {response.ReasonPhrase} - {responseContent}");
             }
         }
+        //public async Task<IActionResult> MakeExchangesCurrent(DateTime? lastdate)
+        //{
+        //    return 
+        //}
     }
 }
