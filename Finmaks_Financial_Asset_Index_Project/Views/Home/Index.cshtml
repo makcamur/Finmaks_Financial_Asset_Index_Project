@@ -1,8 +1,63 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Finmaks Financial Index Asset";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="start">
+    <form method="post" enctype="multipart/form-data" action="/YourController/ProcessForm">
+        </br>
+        <div class="form-group">
+            <label for="file1">Upload Asset Excel File :</label>
+            <input type="file" class="form-control-file" id="fileAsset" name="file1">
+        </div>
+        </br>
+        <div class="form-group">
+            <label for="file2">Upload Index Excel File :</label>
+            <input type="file" class="form-control-file" id="fileIndex" name="file2">
+        </div>
+        <div class="form-group">
+            <label for="startDate">Start Date:</label>
+            <input type="date" class="form-control" id="startDate" name="startDate">
+        </div>
+        <div class="form-group">
+            <label for="endDate">End Date:</label>
+            <input type="date" class="form-control" id="endDate" name="endDate">
+        </div>
+        <button type="button" onclick="ProcessData()" class="btn btn-primary">Lets Go</button>
+    </form>
 </div>
+<div id="afterProcess" ></div>
+
+<script>
+    function ProcessData() {
+        // Form verilerini topla
+        var formData = new FormData();
+        var fileAsset = document.getElementById('fileAsset').files[0];
+        var fileIndex = document.getElementById('fileIndex').files[0];
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
+
+        formData.append('fileAsset', fileAsset);
+        formData.append('fileIndex', fileIndex);
+        formData.append('startDate', startDate);
+        formData.append('endDate', endDate);
+        console.log(formData);
+        // API adresini belirle
+        const baseUrl = "https://localhost:7012/api/";
+        const apiUrl = baseUrl + "Exchange/ProcessForm";
+        $.ajax({
+            url: apiUrl,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+                var afterProcessDiv = document.getElementById('afterProcess');
+                afterProcessDiv.innerHTML = "API'den gelen yanıt: " + JSON.stringify(data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    }
+</script>

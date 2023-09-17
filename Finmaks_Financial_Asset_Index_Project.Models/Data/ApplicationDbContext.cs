@@ -13,8 +13,7 @@ namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data
         {
 
         }
-        public DbSet<Entities.Index> Indices { get; set; }
-        public DbSet<Entities.Asset> Assets { get; set; }
+        public DbSet<Entities.Exchange> Exchanges { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
