@@ -8,6 +8,7 @@ namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Repository.Irepositor
 {
     public interface IUnitOfWorksRepository
     {
+        IExchangeRepository ExchangeRepository { get; }
         void Save();
     }
 }
