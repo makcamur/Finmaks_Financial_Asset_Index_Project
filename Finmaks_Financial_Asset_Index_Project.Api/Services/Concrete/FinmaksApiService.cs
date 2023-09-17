@@ -1,6 +1,5 @@
 ﻿using Finmaks_Financial_Asset_Index_Project.Api.Services.Abstract;
-using Finmaks_Financial_Asset_Index_Project.Models.Models.Request;
-using Finmaks_Financial_Asset_Index_Project.Models.Models.Response;
+using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response;
 using System.Text.Json;
 
 namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete

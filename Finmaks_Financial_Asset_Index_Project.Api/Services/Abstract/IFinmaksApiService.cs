@@ -1,4 +1,5 @@
-﻿using Finmaks_Financial_Asset_Index_Project.Models.Models.Response;
+﻿using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response;
+
 
 namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Abstract
 {

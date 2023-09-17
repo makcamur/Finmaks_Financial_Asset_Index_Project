@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Finmaks_Financial_Asset_Index_Project.Models.Models.Request
+namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response
 {
     public class FinmaksExchangeRatesRequest
     {

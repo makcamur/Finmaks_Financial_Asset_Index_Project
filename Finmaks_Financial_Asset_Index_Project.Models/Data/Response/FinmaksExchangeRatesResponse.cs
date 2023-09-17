@@ -1,11 +1,12 @@
-﻿using Finmaks_Financial_Asset_Index_Project.Models.Models.Commons;
+﻿
+using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Commons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Finmaks_Financial_Asset_Index_Project.Models.Models.Response
+namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response
 {
     public class FinmaksExchangeRatesResponse
     {

@@ -18,10 +18,9 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-   
-            DateTime startDate = DateTime.Now;
-            var result=_finmaksApiService.GetFinmaksExchangeRates(startDate);
-            var jsonResult=JsonSerializer.Serialize(result);
+            DateTime startDate = new DateTime(2023, 08, 01);
+            var result = _finmaksApiService.GetFinmaksExchangeRates(startDate);
+            var jsonResult = JsonSerializer.Serialize(result);
             return Ok(jsonResult);
 
         }

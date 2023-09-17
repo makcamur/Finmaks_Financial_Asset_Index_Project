@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Finmaks_Financial_Asset_Index_Project.Models.Models
+namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Entities
 {
     public class Asset
     {
