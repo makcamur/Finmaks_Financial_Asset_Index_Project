@@ -1,4 +1,5 @@
-﻿using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response;
+﻿using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.DTOs;
+using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 
@@ -8,8 +9,10 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Abstract
     {
         public Task<FinmaksExchangeRatesResponse> GetFinmaksExchangeRates(DateTime? startDate);
         public void MakeExchangesUpToDate(DateTime? lastdate);
+        public void MakeExchangesUpToDateLive(DateTime? lastdate);
         public DateTime FindLastDate();
-
+        public AssetResultDTO GetAsset(DataDTO data);
+        public IndexResultDTO GetIndex(DataDTO data);
 
      }
 }

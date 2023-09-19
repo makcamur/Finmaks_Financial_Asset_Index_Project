@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data
+namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data.DTOs
 {
     public class DataDTO
     {
