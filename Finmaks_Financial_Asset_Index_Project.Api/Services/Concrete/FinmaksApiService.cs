@@ -234,7 +234,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 result.Success = false;
                 result.ErrorMessage = ex.Message;
             }
-
+            var test=result.Data;
             return result;
         }
         public IndexResultDTO GetIndex(DataDTO data)
@@ -293,9 +293,10 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 result.Success = false;
                 result.ErrorMessage = ex.Message;
             }
-
+            var test = result.Data;
             return result;
         }
+         
 
 
 

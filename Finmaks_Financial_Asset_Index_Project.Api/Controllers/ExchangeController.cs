@@ -38,8 +38,8 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Controllers
                 var lastdate=data.EndDate;
 
                 _finmaksApiService.MakeExchangesUpToDate(lastdate);
-                _finmaksApiService.GetAsset(data);
-                _finmaksApiService.GetIndex(data);
+                var asset=_finmaksApiService.GetAsset(data);
+                var index=_finmaksApiService.GetIndex(data);
                 ////Burada form verilerini işleyin.
                 // fileAsset ve fileIndex dosyalarını kaydedebilir veya işleyebilirsiniz.
                 // startDate ve endDate gibi tarih verilerini kullanabilirsiniz.
