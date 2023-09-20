@@ -196,13 +196,13 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                             {
                                 int noOfCol = workSheet.Dimension.End.Column;
                                 int noOfRow = workSheet.Dimension.End.Row;
-                                int rowIndex = 1;
+                                int rowIndex = 2;
 
                                 for (int c = 1; c <= noOfCol; c++)
                                 {
                                     table.Columns.Add(workSheet.Cells[rowIndex, c].Text);
                                 }
-                                rowIndex = 2;
+                                rowIndex ++;
                                 for (int r = rowIndex; r <= noOfRow; r++)
                                 {
                                     DataRow dr = table.NewRow();

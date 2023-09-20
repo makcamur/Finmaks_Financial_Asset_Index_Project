@@ -32,5 +32,30 @@ namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data.DTOs
         [Display(Name = "Dolarizasyon Varlık Tutarı")]
         public List<Decimal> DollarizationAssetAmount { get; set; }
 
+        [Display(Name = "Dolarizasyon Önceki Aya Göre Varlık Artış ")]
+        public List<Decimal> DollarizationIncreaseComparedToThePreviousMonth { get; set; }
+
+        [Display(Name ="Dolarizasyon Varlık Değişim Oranı ")]
+        public List<Decimal> DollarizationAssetTurnoverRate { get; set; }
+
+        [Display(Name = "Dolarizasyon Etkisi Yüzde ")]
+        public List<Decimal> DollarizationImpactPercentage { get; set; }
+
+        [Display(Name = "Üfe Endeks ")]
+        public List<Decimal>  ProducerPriceIndex { get; set; }
+
+        [Display(Name = "Enflasyon Varlık Tutarı ")]
+        public List<Decimal> InflationAssetValue { get; set; }
+
+        [Display(Name = "Enflasyon Önceki Aya Göre Varlık Artış ")]
+        public List<Decimal> InflationAssetIncreaseComparedToThePreviousMonth { get; set; }
+
+        [Display(Name = "Enflasyon Varlık Değişim Oranı ")]
+        public List<Decimal> InflationAssetTurnoverRate { get; set; }
+
+        [Display(Name ="Enflasyon Etkisi Yüzde ")]
+        public List<Decimal> InflationImpactPercentage { get; set; }
+ 
+
     }
 }
