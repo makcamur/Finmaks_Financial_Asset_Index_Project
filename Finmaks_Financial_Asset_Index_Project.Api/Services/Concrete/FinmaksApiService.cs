@@ -1,5 +1,6 @@
 ﻿using Finmaks_Financial_Asset_Index_Project.Api.Services.Abstract;
 using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.DTOs;
+using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Entities;
 using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response;
 using Finmaks_Financial_Asset_Index_Project.DataAccess.Repository.Irepository;
 using Hangfire.Annotations;
@@ -258,7 +259,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                                 int noOfCol = workSheet.Dimension.End.Column;
                                 int noOfRow = workSheet.Dimension.End.Row;
 
-                                int rowIndex = 7;
+                                int rowIndex = 6;
 
                                 for (int c = 1; c <= noOfCol; c++)
                                 {
@@ -293,21 +294,46 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             {
                 result.Success = false;
                 result.ErrorMessage = ex.Message;
-            }    
+            }
             return result;
         }
+        /// <summary>
+        /// Önce verilen varlık (AssetResultDTO) üzerinde işlem yapılabilmesi için varlık tarihlerini hesaplar (CalculateAssetDate metodu kullanılır).
+        /// Ardından, her bir tarih için (item) belirli bir döviz kuru almak için bir döngü kullanır.
+        /// Bu döviz kurlarını almak için _unitOfWorksRepository.ExchangeRepository.Get metodu kullanılır. Bu metod, belirli bir tarih (item),
+        /// temel para birimi kodu (BaseCurrencyCode) 1 (dolar) ve yabancı para birimi kodu (ForeignCurrencyCode) 56 (Türk Lirası) olan döviz
+        /// kurlarını getirir ve bunları exchangeResultDTO.Data koleksiyonuna ekler.
+        /// Eğer varlık tarihleri (assetDates) null ise veya bir hata oluşursa, metot hata mesajını ayarlar (exchangeResultDTO.Success = false ve
+        /// exchangeResultDTO.ErrorMessage) ve işlemi sonlandırır.
+        /// Eğer her şey başarılı bir şekilde tamamlanırsa, metot başarılı olduğunu belirtir (exchangeResultDTO.Success = true) ve bir başarı
+        /// mesajı ayarlar (exchangeResultDTO.Message).
+        /// Eğer herhangi bir hata oluşursa (örneğin, bir istisna fırlatılırsa), hata mesajını yakalar ve exchangeResultDTO içinde hata mesajını ayarlar.
+        /// Sonuç olarak, bu metod bir varlık için belirli tarihlerde döviz kurlarını almayı amaçlar ve sonucu bir ExchangeResultDTO nesnesi içinde döner.
+        /// Başlangıç para birimi kodu 1 (dolar) ve hedef para birimi kodu 56 (Türk Lirası) olarak belirlenmiştir.
+        /// </summary>
+        /// <param name="asset"></param>
+        /// <returns></returns>
         public ExchangeResultDTO GetExchange(AssetResultDTO asset)
         {
             var assetDates = CalculateAssetDate(asset);
             ExchangeResultDTO exchangeResultDTO = new ExchangeResultDTO();
+
             try
             {
                 if (assetDates != null)
                 {
-                    foreach (var item in assetDates)
+                    for (int i = 0; i < assetDates.Count; i++)
                     {
-                        var assetExcel = _unitOfWorksRepository.ExchangeRepository.Get(x => x.CurrentDate == item && x.BaseCurrencyCode == 1 && x.ForeignCurrencyCode == 56);
-                        exchangeResultDTO.Data.Add(assetExcel);
+                        var exchangeExcel = _unitOfWorksRepository.ExchangeRepository.Get(x => x.CurrentDate.Month == assetDates[i].Month && x.CurrentDate.Day == assetDates[i].Day && x.CurrentDate.Year == assetDates[i].Year && x.BaseCurrencyCode == 1 && x.ForeignCurrencyCode == 56);
+                        if (exchangeExcel != null)
+                        {
+                            if (exchangeResultDTO.Data == null)
+                            {
+                                exchangeResultDTO.Data = new List<Exchange>();
+                            }
+
+                            exchangeResultDTO.Data.Add(exchangeExcel);
+                        }
                     }
                 }
                 else
@@ -318,7 +344,6 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 }
                 exchangeResultDTO.Success = true;
                 exchangeResultDTO.Message = "Exchange Successfully Converted to Data Table";
-                
             }
             catch (Exception ex)
             {
@@ -328,7 +353,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             return exchangeResultDTO;
 
         }
-        public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındex)
+        public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındex, ExchangeResultDTO exchange)
         {
             List<List<object>> assetExcelFileColumn = new List<List<object>>();
 
@@ -351,7 +376,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             AssetIndexExchangeFinalTableDTO dto = new AssetIndexExchangeFinalTableDTO();
 
 
-            // assetExcelFileColumn[0]'ı dto.dateTimes'e eşitleme
+            // Final Table için tarih sütununun alınması
             dto.dateTimes = assetExcelFileColumn[0].Select(item =>
             {
                 if (DateTime.TryParse((string?)item, out DateTime dateTime))
@@ -364,7 +389,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             }).ToList();
 
 
-            // assetExcelFileColumn[1]'i dto.Assets'e eşitleme
+            // Final Table için varlık tarih varlık  tutarları sütununun alınması
             dto.Assets = assetExcelFileColumn[1].Select(item =>
             {
                 if (decimal.TryParse((string?)item, out decimal decimalValue))
@@ -379,6 +404,81 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 }
             }).ToList();
 
+            //Final Table için Önceki Aya Göre Varlık Artış Sütünunun alınması 
+            dto.IncreaseInAssetsComparedToThePreviousMonth = new List<decimal>();
+
+            for (int i = 0; i < dto.Assets.Count; i++)
+            {
+                if (i == 0)
+                {
+                    dto.IncreaseInAssetsComparedToThePreviousMonth.Add(0);
+                }
+                if (i != 0)
+                {
+                    var value = (dto.Assets[i] - dto.Assets[i - 1]) / dto.Assets[i - 1];
+                    dto.IncreaseInAssetsComparedToThePreviousMonth.Add(value);
+                }
+
+            }
+            // Final Table için Varlık Değişim Oranı Sütünunun alınması
+            dto.AssetTurnoverRatio = new List<decimal>();
+            for (int i = 0; i < dto.Assets.Count; i++)
+            {
+                var value = (dto.Assets[dto.Assets.Count - 1] - dto.Assets[i]) / dto.Assets[i];
+                dto.AssetTurnoverRatio.Add(value);
+
+            }
+           
+
+            // Final Table için Varlık Tarih Dolar Kuru Sütünunun alınması
+            dto.AssetHistoricalExchangeRate = new List<decimal>();
+
+            exchange.Data.ForEach(item =>
+            {
+                dto.AssetHistoricalExchangeRate.Add(item.CashExchangeRate);
+            });
+
+            //Final Table için Dolarizasyon Varlık Tutarı Sütünunun alınması
+            dto.DollarizationAssetAmount = new List<decimal>();
+            for (int i = 0; i < dto.Assets.Count; i++)
+            {
+                var value = dto.AssetHistoricalExchangeRate[dto.Assets.Count-1]/dto.AssetHistoricalExchangeRate[i]*dto.Assets[i];
+                dto.DollarizationAssetAmount.Add(value);
+            }
+             
+
+            //Final Table için Dolarizasyon Önceki Aya Göre Varlık Artış Sütünunun alınması
+            dto.DollarizationIncreaseComparedToThePreviousMonth = new List<decimal>();
+            for (int i = 0; i < dto.DollarizationAssetAmount.Count; i++)
+            {
+                if (i == 0)
+                {
+                    dto.DollarizationIncreaseComparedToThePreviousMonth.Add(0);
+                }
+                if (i != 0)
+                {
+                    var value = (dto.DollarizationAssetAmount[i] - dto.DollarizationAssetAmount[i - 1]) / dto.DollarizationAssetAmount[i - 1];
+                    dto.DollarizationIncreaseComparedToThePreviousMonth.Add(value);
+                }
+
+            }
+
+            //Final Table için Dolarizasyon Varlık Değişim Oranı Sütünunun alınması
+            dto.DollarizationAssetTurnoverRate = new List<decimal>();
+            for (int i = 0; i < dto.DollarizationAssetAmount.Count; i++)
+            {
+                var value = (dto.DollarizationAssetAmount[dto.DollarizationAssetAmount.Count - 1] - dto.DollarizationAssetAmount[i]) / dto.DollarizationAssetAmount[i];
+                dto.DollarizationAssetTurnoverRate.Add(value);
+            }
+            //Final Table için Dolarizasyon Etkisi Yüzde Sütünunun alınması
+            dto.DollarizationImpactPercentage = new List<decimal>();
+            for (int i = 0; i < dto.DollarizationAssetAmount.Count; i++)
+            {
+                var value = (dto.Assets[i] - dto.DollarizationAssetAmount[i]) / dto.DollarizationAssetAmount[i];
+                dto.DollarizationImpactPercentage.Add(value);
+            }
+            var test = dto;
+            return dto;
 
         }
         public List<DateTime> CalculateAssetDate(AssetResultDTO asset)

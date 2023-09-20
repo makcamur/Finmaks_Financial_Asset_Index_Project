@@ -40,7 +40,9 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Controllers
                 _finmaksApiService.MakeExchangesUpToDate(lastdate);
                 var asset=_finmaksApiService.GetAsset(data);
                 var index=_finmaksApiService.GetIndex(data);
-
+                var exchange=_finmaksApiService.GetExchange(asset);   
+                var finalTable=_finmaksApiService.CalculateFinalTable(asset,index,exchange);
+                var test2 = 3;
                 //for (int i = 0; i < asset.Data.Rows.Count; i++)
                 //{
                 //    asset.Data.Rows[i].ItemArray.ToList<>

@@ -12,7 +12,7 @@ namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data.DTOs
     {
         public bool Success { get; set; }
         public string Message { get; set; }
-        public List<Exchange> Data { get; set; }
+        public List<Exchange>? Data { get; set; } = new List<Exchange>();
         public string ErrorMessage { get; set; }
     }
 }
