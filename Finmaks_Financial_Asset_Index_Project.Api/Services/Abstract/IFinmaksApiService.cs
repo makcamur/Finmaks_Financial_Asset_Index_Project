@@ -13,6 +13,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Abstract
         public DateTime FindLastDate();
         public AssetResultDTO GetAsset(DataDTO data);
         public IndexResultDTO GetIndex(DataDTO data);
-
+        public ExchangeResultDTO GetExchange(AssetResultDTO asset);
+        public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındex);
      }
 }

@@ -2,6 +2,7 @@
 using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.DTOs;
 using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response;
 using Finmaks_Financial_Asset_Index_Project.DataAccess.Repository.Irepository;
+using Hangfire.Annotations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -165,7 +166,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
         }
         //public void GetAsset2(DataDTO data)
         //{
-            
+
         //    var aa = table;
         //    var be = aa.Rows;
         //    Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -196,13 +197,13 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                             {
                                 int noOfCol = workSheet.Dimension.End.Column;
                                 int noOfRow = workSheet.Dimension.End.Row;
-                                int rowIndex = 2;
+                                int rowIndex = 1;
 
                                 for (int c = 1; c <= noOfCol; c++)
                                 {
                                     table.Columns.Add(workSheet.Cells[rowIndex, c].Text);
                                 }
-                                rowIndex ++;
+                                rowIndex++;
                                 for (int r = rowIndex; r <= noOfRow; r++)
                                 {
                                     DataRow dr = table.NewRow();
@@ -234,7 +235,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 result.Success = false;
                 result.ErrorMessage = ex.Message;
             }
-            var test=result.Data;
+            var test = result.Data;
             return result;
         }
         public IndexResultDTO GetIndex(DataDTO data)
@@ -256,7 +257,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                             {
                                 int noOfCol = workSheet.Dimension.End.Column;
                                 int noOfRow = workSheet.Dimension.End.Row;
-                           
+
                                 int rowIndex = 7;
 
                                 for (int c = 1; c <= noOfCol; c++)
@@ -280,10 +281,10 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                         {
                             result.Success = false;
                             result.ErrorMessage = "No Work Sheet available in Excel File";
-                            return result; 
+                            return result;
                         }
                     }
-                } 
+                }
                 result.Success = true;
                 result.Message = "Excel Successfully Converted to Data Table";
                 result.Data = table; // Verileri burada atayın
@@ -292,12 +293,131 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             {
                 result.Success = false;
                 result.ErrorMessage = ex.Message;
-            }
-            var test = result.Data;
+            }    
             return result;
         }
-         
+        public ExchangeResultDTO GetExchange(AssetResultDTO asset)
+        {
+            var assetDates = CalculateAssetDate(asset);
+            ExchangeResultDTO exchangeResultDTO = new ExchangeResultDTO();
+            try
+            {
+                if (assetDates != null)
+                {
+                    foreach (var item in assetDates)
+                    {
+                        var assetExcel = _unitOfWorksRepository.ExchangeRepository.Get(x => x.CurrentDate == item && x.BaseCurrencyCode == 1 && x.ForeignCurrencyCode == 56);
+                        exchangeResultDTO.Data.Add(assetExcel);
+                    }
+                }
+                else
+                {
+                    exchangeResultDTO.Success = false;
+                    exchangeResultDTO.ErrorMessage = "Exchange matching with excel file might have some problem";
+                    return exchangeResultDTO;
+                }
+                exchangeResultDTO.Success = true;
+                exchangeResultDTO.Message = "Exchange Successfully Converted to Data Table";
+                
+            }
+            catch (Exception ex)
+            {
+                exchangeResultDTO.Success = false;
+                exchangeResultDTO.ErrorMessage = ex.Message;
+            }
+            return exchangeResultDTO;
 
+        }
+        public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındex)
+        {
+            List<List<object>> assetExcelFileColumn = new List<List<object>>();
+
+            for (int columnIndex = 0; columnIndex < asset.Data.Columns.Count; columnIndex++)
+            {
+                // Her sütunun verilerini saklamak için bir liste oluşturun
+                List<object> columnData = new List<object>();
+
+                for (int rowIndex = 0; rowIndex < asset.Data.Rows.Count; rowIndex++)
+                {
+                    // Sütundaki veriyi alın ve listeye ekleyin
+                    object cellValue = asset.Data.Rows[rowIndex][columnIndex];
+                    columnData.Add(cellValue);
+                }
+
+                // Sütunun verilerini genel listeye ekleyin
+                assetExcelFileColumn.Add(columnData);
+            }
+
+            AssetIndexExchangeFinalTableDTO dto = new AssetIndexExchangeFinalTableDTO();
+
+
+            // assetExcelFileColumn[0]'ı dto.dateTimes'e eşitleme
+            dto.dateTimes = assetExcelFileColumn[0].Select(item =>
+            {
+                if (DateTime.TryParse((string?)item, out DateTime dateTime))
+                {
+                    return dateTime;
+                }
+                // Dönüşüm başarısız olursa varsayılan bir değer kullanabilirsiniz.
+                // Örneğin, DateTime.MinValue veya null.
+                return DateTime.MinValue;
+            }).ToList();
+
+
+            // assetExcelFileColumn[1]'i dto.Assets'e eşitleme
+            dto.Assets = assetExcelFileColumn[1].Select(item =>
+            {
+                if (decimal.TryParse((string?)item, out decimal decimalValue))
+                {
+                    return decimalValue;
+                }
+                else
+                {
+                    // Dönüşüm başarısız olduğunda nasıl bir işlem yapılacağını burada belirleyebilirsiniz.
+                    // Örneğin, hata işleme veya varsayılan bir değer atama.
+                    return 0; // Varsayılan değer
+                }
+            }).ToList();
+
+
+        }
+        public List<DateTime> CalculateAssetDate(AssetResultDTO asset)
+        {
+            List<List<object>> assetExcelFileColumn = new List<List<object>>();
+
+            for (int columnIndex = 0; columnIndex < asset.Data.Columns.Count; columnIndex++)
+            {
+                // Her sütunun verilerini saklamak için bir liste oluşturun
+                List<object> columnData = new List<object>();
+
+                for (int rowIndex = 0; rowIndex < asset.Data.Rows.Count; rowIndex++)
+                {
+                    // Sütundaki veriyi alın ve listeye ekleyin
+                    object cellValue = asset.Data.Rows[rowIndex][columnIndex];
+                    columnData.Add(cellValue);
+                }
+
+                // Sütunun verilerini genel listeye ekleyin
+                assetExcelFileColumn.Add(columnData);
+            }
+
+            AssetIndexExchangeFinalTableDTO dto = new AssetIndexExchangeFinalTableDTO();
+
+
+            // assetExcelFileColumn[0]'ı dto.dateTimes'e eşitleme
+            dto.dateTimes = assetExcelFileColumn[0].Select(item =>
+            {
+                if (DateTime.TryParse((string?)item, out DateTime dateTime))
+                {
+                    return dateTime;
+                }
+                // Dönüşüm başarısız olursa varsayılan bir değer kullanabilirsiniz.
+                // Örneğin, DateTime.MinValue veya null.
+                return DateTime.MinValue;
+            }).ToList();
+
+            return dto.dateTimes;
+        }
 
 
     }
