@@ -63,12 +63,11 @@
 </style>
 <div id="start">
     <form method="post" enctype="multipart/form-data" action="/YourController/ProcessForm">
-        </br>
+        <!-- Diğer form alanları buraya ekleniyor -->
         <div class="form-group">
             <label for="file1">Upload Asset Excel File :</label>
             <input type="file" class="form-control-file" id="fileAsset" name="file1">
         </div>
-        </br>
         <div class="form-group">
             <label for="file2">Upload Index Excel File :</label>
             <input type="file" class="form-control-file" id="fileIndex" name="file2">
@@ -81,13 +80,22 @@
             <label for="endDate">End Date:</label>
             <input type="date" class="form-control" id="endDate" name="endDate">
         </div>
-        <button type="button" onclick="ProcessData()" class="btn btn-primary">Lets Go</button>
+        <button type="button" onclick="ProcessData()" class="btn btn-primary" id="submitButton">Lets Go</button>
     </form>
 </div>
-<div id="afterProcess" ></div>
+<div id="afterProcess"></div>
+<div id="lastUpdated" style="display: none;"></div> <!-- Son güncellenme tarihini gösterecek div -->
 
 <script>
+    var isProcessing = false; // İşlemi kontrol etmek için bir bayrak
+
     function ProcessData() {
+        if (isProcessing) {
+            return; // Eğer işlem zaten devam ediyorsa tekrar tetiklemeyi engelle
+        }
+
+        isProcessing = true; // İşlemi başlat
+
         // Form verilerini topla
         var formData = new FormData();
         var fileAsset = document.getElementById('fileAsset').files[0];
@@ -99,10 +107,11 @@
         formData.append('fileIndex', fileIndex);
         formData.append('startDate', startDate);
         formData.append('endDate', endDate);
-        console.log(formData);
+
         // API adresini belirle
         const baseUrl = "https://localhost:7012/api/";
         const apiUrl = baseUrl + "Exchange/ProcessForm";
+        // AJAX isteği gönder
         $.ajax({
             url: apiUrl,
             type: 'POST',
@@ -110,9 +119,16 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                var redirectToUrl = '@Url.Action("GetPartial", "Home")'; 
+                var redirectToUrl = '@Url.Action("GetPartial", "Home")';
                 var jsonData = JSON.stringify(data);
                 redirectToUrl += '?jsonData=' + encodeURIComponent(jsonData);
+                // Son güncellenme tarihini güncelle
+                var currentDate = new Date();
+                var lastUpdatedText = "Son güncelleme tarihi: " + currentDate.toLocaleString();
+                var lastUpdatedDiv = document.getElementById("lastUpdated");
+                lastUpdatedDiv.style.display = "block";
+                lastUpdatedDiv.textContent = lastUpdatedText;
+                // Sonuçları göster
                 $.ajax({
                     url: redirectToUrl,
                     type: 'GET',
@@ -126,8 +142,11 @@
             },
             error: function (error) {
                 console.log(error);
+            },
+            complete: function () {
+                isProcessing = false; // İşlem tamamlandığında bayrağı kaldır
             }
         });
-
     }
+    setInterval(ProcessData, 60000); 
 </script>
