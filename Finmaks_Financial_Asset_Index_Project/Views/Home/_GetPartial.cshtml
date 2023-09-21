@@ -1,0 +1,58 @@
+﻿@model AssetIndexExchangeFinalTableDTO
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="14">Rapor Tarihi: @Model.dateTimes[Model.dateTimes.Count - 1].ToString("MMMM yyyy")</th>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.dateTimes)</th>
+            <th>@Html.DisplayNameFor(model => model.Assets)</th>
+            <th>@Html.DisplayNameFor(model => model.IncreaseInAssetsComparedToThePreviousMonth)</th>
+            <th>@Html.DisplayNameFor(model => model.AssetTurnoverRatio)</th>
+            <th>@Html.DisplayNameFor(model => model.AssetHistoricalExchangeRate)</th>
+            <th>@Html.DisplayNameFor(model => model.DollarizationAssetAmount)</th>
+            <th>@Html.DisplayNameFor(model => model.DollarizationIncreaseComparedToThePreviousMonth)</th>
+            <th>@Html.DisplayNameFor(model => model.DollarizationAssetTurnoverRate)</th>
+            <th>@Html.DisplayNameFor(model => model.DollarizationImpactPercentage)</th>
+            <th>@Html.DisplayNameFor(model => model.ProducerPriceIndex)</th>
+            <th>@Html.DisplayNameFor(model => model.InflationAssetValue)</th>
+            <th>@Html.DisplayNameFor(model => model.InflationAssetIncreaseComparedToThePreviousMonth)</th>
+            <th>@Html.DisplayNameFor(model => model.InflationAssetTurnoverRate)</th>
+            <th>@Html.DisplayNameFor(model => model.InflationImpactPercentage)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.dateTimes.Count; i++)
+        {
+            <tr>
+                <td>@Model.dateTimes[i].ToString("dd.MM.yyyy")</td>
+                <td>@String.Format("{0:C}", Model.Assets[i])</td>
+                <td>@((Model.IncreaseInAssetsComparedToThePreviousMonth[i] * 100).ToString("0.00"))%</td>
+                <td>@((Model.AssetTurnoverRatio[i] * 100).ToString("0.00"))%</td>
+                <td>@(Model.AssetHistoricalExchangeRate[i].ToString("0.000"))</td>
+                <td>@String.Format("{0:C}", Model.DollarizationAssetAmount[i])</td>
+                <td>@((Model.DollarizationIncreaseComparedToThePreviousMonth[i] * 100).ToString("0.00"))%</td>
+                <td>@((Model.DollarizationAssetTurnoverRate[i] * 100).ToString("0.00"))%</td>
+                <td>@((Model.DollarizationImpactPercentage[i] * 100).ToString("0.00"))</td>
+                <td>@(Model.ProducerPriceIndex[i].ToString("0.000"))</td>
+                <td>@String.Format("{0:C}", Model.InflationAssetValue[i])</td>
+                <td>@((Model.InflationAssetIncreaseComparedToThePreviousMonth[i] * 100).ToString("0.00"))%</td>
+                <td>@((Model.InflationAssetTurnoverRate[i] * 100).ToString("0.00"))%</td>
+                <td>@((Model.InflationImpactPercentage[i] * 100).ToString("0.00"))%</td>
+            </tr>
+        }
+    </tbody>
+</table>

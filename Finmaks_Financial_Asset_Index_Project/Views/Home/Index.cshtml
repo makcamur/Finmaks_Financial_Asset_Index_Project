@@ -1,6 +1,65 @@
 ﻿@{
     ViewData["Title"] = "Finmaks Financial Index Asset";
 }
+<style>
+    /* Form Container */
+    #start {
+        max-width: 600px; /* İstediğiniz genişliği ayarlayabilirsiniz */
+        margin: 0 auto; /* Ortalama formu sayfanın ortasına */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Form Group */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Label Styles */
+    label {
+        font-weight: bold;
+    }
+
+    /* Input Styles */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* File Input Styles */
+    .form-control-file {
+        width: 100%;
+    }
+
+    /* Button Styles */
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Table Styles for afterProcess */
+    #afterProcess table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    #afterProcess table, #afterProcess th, #afterProcess td {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    #afterProcess th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }</style>
 <div id="start">
     <form method="post" enctype="multipart/form-data" action="/YourController/ProcessForm">
         </br>
@@ -50,34 +109,29 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log(data);
-                PrintTable(data);
-                var afterProcessDiv = document.getElementById('afterProcess');
-                afterProcessDiv.innerHTML = "API'den gelen yanıt: " + JSON.stringify(data);
+                var redirectToUrl = '@Url.Action("GetPartial", "Home")'; // ActionName ve ControllerName'i kendi projenize göre ayarlayın
+                // Elde edilen veriyi JSON formatına çevirip URL'ye query parametresi olarak ekleyin
+                var jsonData = JSON.stringify(data);
+                redirectToUrl += '?jsonData=' + encodeURIComponent(jsonData);
+                // Yönlendirmeyi gerçekleştirin ve sonucu #afterProcess id'li div'e yerleştirin
+                $.ajax({
+                    url: redirectToUrl,
+                    type: 'GET',
+                    success: function (partialViewResult) {
+                        // Kısmi görünümü #afterProcess id'li div'e yerleştirin
+                        $('#afterProcess').html(partialViewResult);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
             },
             error: function (error) {
                 console.log(error);
             }
         });
 
-    }
-    function PrintTable(myData) {
-        var mvcUrl = "https://localhost:7028/"+"Home";
-        $.ajax({
-            url: mvcUrl,
-            type: 'POST',
-            data: myData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                console.log(data);
-                var afterProcessDiv = document.getElementById('afterProcess');
-                afterProcessDiv.innerHTML = "API'den gelen yanıt: " + JSON.stringify(data);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
     }
   
 </script>

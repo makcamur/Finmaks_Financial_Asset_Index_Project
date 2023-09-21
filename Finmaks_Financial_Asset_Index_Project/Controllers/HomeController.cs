@@ -1,7 +1,10 @@
 ﻿using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.DTOs;
 using Finmaks_Financial_Asset_Index_Project.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Xml.Linq;
 
 namespace Finmaks_Financial_Asset_Index_Project.Controllers
 {
@@ -18,7 +21,13 @@ namespace Finmaks_Financial_Asset_Index_Project.Controllers
         {
             return View();
         }
+        [HttpGet("Home/Get")]
+        public IActionResult GetPartial(string jsonData)
+        {
+            var model = JsonConvert.DeserializeObject<AssetIndexExchangeFinalTableDTO>(jsonData);
 
+            return PartialView("_GetPartial", model);
+        }
         public IActionResult Privacy()
         {
             return View();
