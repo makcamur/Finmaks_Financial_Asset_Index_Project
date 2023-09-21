@@ -352,13 +352,15 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             return exchangeResultDTO;
         }
         /// <summary>
-        /// Verilen varlık, endeks ve döviz verileri kullanarak final bir tabloyu hesaplar.
+        /// Belirtilen varlık, endeks ve döviz verilerini kullanarak, belirli bir tarih aralığı içindeki verilere dayalı olarak çeşitli hesaplamalar yapar ve sonuçları içeren bir AssetIndexExchangeFinalTableDTO nesnesi döndürür.
         /// </summary>
         /// <param name="asset">Varlık verilerini içeren AssetResultDTO nesnesi.</param>
         /// <param name="ındexValue">Endeks verilerini içeren IndexResultDTO nesnesi.</param>
         /// <param name="exchange">Döviz verilerini içeren ExchangeResultDTO nesnesi.</param>
-        /// <returns>AssetIndexExchangeFinalTableDTO türünde hesaplanan final tablo.</returns>
-        public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındexValue, ExchangeResultDTO exchange)
+        /// <param name="startDateInterval">Başlangıç tarih aralığı.</param>
+        /// <param name="lastDateInterval">Bitiş tarih aralığı.</param>
+        /// <returns>Çeşitli hesaplamaların sonuçları ve işlem durumu bilgisini içeren AssetIndexExchangeFinalTableDTO nesnesi.</returns>
+        public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındexValue, ExchangeResultDTO exchange, DateTime startDateInterval, DateTime lastDateInterval)
         {
            
 
@@ -541,6 +543,43 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 dto.Success = false;
                 dto.ErrorMessage = ex.Message;
                 dto.Message = "Final Table Successfully Converted to Data Table";
+            }
+            // Tarih aralığı dışındaki indeksler
+            List<int> indicesToRemove = new List<int>();
+            for (int i = 0; i < dto.dateTimes.Count; i++)
+            {
+                if (dto.dateTimes[i] < startDateInterval || dto.dateTimes[i] > lastDateInterval)
+                {
+                    indicesToRemove.Add(i);
+                }
+            }
+
+            // Geriye doğru sildiğinizden, indeksleri sildikçe değişkenleri güncelleme
+            for (int i = indicesToRemove.Count - 1; i >= 0; i--)
+            {
+                int indexToRemove = indicesToRemove[i];
+
+                // dto.dateTimes'dan silme
+                dto.dateTimes.RemoveAt(indexToRemove);
+
+                // Diğer dto listelerinden de aynı indeksi silme
+                dto.Assets.RemoveAt(indexToRemove);
+                dto.IncreaseInAssetsComparedToThePreviousMonth.RemoveAt(indexToRemove);
+                dto.AssetTurnoverRatio.RemoveAt(indexToRemove);
+                dto.AssetHistoricalExchangeRate.RemoveAt(indexToRemove);
+                dto.DollarizationAssetAmount.RemoveAt(indexToRemove);
+                dto.DollarizationIncreaseComparedToThePreviousMonth.RemoveAt(indexToRemove);
+                dto.DollarizationAssetTurnoverRate.RemoveAt(indexToRemove);
+                dto.DollarizationImpactPercentage.RemoveAt(indexToRemove);
+                dto.ProducerPriceIndex.RemoveAt(indexToRemove);
+                dto.InflationAssetValue.RemoveAt(indexToRemove);
+                dto.InflationAssetIncreaseComparedToThePreviousMonth.RemoveAt(indexToRemove);
+                dto.InflationAssetTurnoverRate.RemoveAt(indexToRemove);
+                dto.InflationImpactPercentage.RemoveAt(indexToRemove);
+            } 
+            if (dto.Success)
+            {
+                dto.Message = "Final Table Successfully Converted to Data Table after removing entries outside the date range";
             }
             return dto;
         }
