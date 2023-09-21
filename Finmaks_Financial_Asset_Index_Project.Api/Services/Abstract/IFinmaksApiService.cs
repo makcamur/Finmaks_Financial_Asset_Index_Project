@@ -2,6 +2,7 @@
 using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Response;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using System.Data;
 
 namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Abstract
 {
@@ -15,5 +16,6 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Abstract
         public IndexResultDTO GetIndex(DataDTO data);
         public ExchangeResultDTO GetExchange(AssetResultDTO asset);
         public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındex,ExchangeResultDTO exchange);
+        
      }
 }

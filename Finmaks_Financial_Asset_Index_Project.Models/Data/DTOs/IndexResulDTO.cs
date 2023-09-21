@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data.DTOs
     {
         public bool Success { get; set; }
         public string Message { get; set; }
-        public DataTable Data { get; set; }
+        public DataTable? Data { get; set; }
         public string ErrorMessage { get; set; }
+        public List<IndexEntity>? Indices { get; set; }=new List<IndexEntity>();
     }
 }
 

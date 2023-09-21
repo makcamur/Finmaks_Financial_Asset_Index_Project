@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace Finmaks_Financial_Asset_Index_Project.DataAccess.Data.Entities
 {
-    public class Index:Base
+    public class IndexEntity
     {
        
         public decimal IndexValue { get; set; }
         public DateTime Date { get; set; }
 
-        //navigation property
-        public int AssetId { get; set; }
-        public Asset? Asset { get; set; }
+      
     }
 }

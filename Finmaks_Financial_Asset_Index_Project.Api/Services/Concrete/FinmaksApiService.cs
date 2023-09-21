@@ -353,7 +353,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             return exchangeResultDTO;
 
         }
-        public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındex, ExchangeResultDTO exchange)
+        public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındexValue, ExchangeResultDTO exchange)
         {
             List<List<object>> assetExcelFileColumn = new List<List<object>>();
 
@@ -477,10 +477,76 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 var value = (dto.Assets[i] - dto.DollarizationAssetAmount[i]) / dto.DollarizationAssetAmount[i];
                 dto.DollarizationImpactPercentage.Add(value);
             }
-            var test = dto;
+
+            // Örnek bir IndexResultDTO örneği oluşturuyoruz.
+            IndexResultDTO result = new IndexResultDTO
+            {
+                Success = true,
+                Message = "Veriler başarıyla işlendi.",
+                Data = ındexValue.Data, // Excel verilerinizi içeren DataTable burada olmalı.
+                Indices = new List<IndexEntity>()
+            };
+
+            // Excel verilerini dönüştürüyoruz ve IndexResultDTO'ya atıyoruz.
+            for (int rowIndex = 0; rowIndex < result.Data.Rows.Count; rowIndex++)
+            {
+                int year = Convert.ToInt32(result.Data.Rows[rowIndex][0]); // İlk sütun yıl bilgisini içeriyor.
+
+                for (int month = 1; month <= 12; month++)
+                {
+                    decimal indexValue = Convert.ToDecimal(result.Data.Rows[rowIndex][month]); // İlgili ayın değeri (decimal) bu sütunda bulunuyor.
+                    DateTime date = new DateTime(year, month, 1);
+
+                    result.Indices.Add(new IndexEntity
+                    {
+                        Date = date,
+                        IndexValue = indexValue
+                    });
+                }
+
+
+                var test = dto;
+          
             return dto;
 
         }
+
+
+        //public Dictionary<DateTime, decimal?> Birlestir(DataTable dataTable)
+        //{
+        //    Dictionary<DateTime, decimal?> birlesmisVeri = new Dictionary<DateTime, decimal?>();
+
+        //    foreach (DataRow row in dataTable.Rows)
+        //    {
+        //        // İlk sütun yılı temsil ediyor, ikinci sütun Ocak ayını, üçüncü sütun Şubat ayını vb. temsil ediyor.
+        //        int yil = Convert.ToInt32(row[0]);
+        //        int ay = 1;
+
+        //        while (ay <= 12)
+        //        {
+        //            // Hücreyi alın ve null mu diye kontrol edin
+        //            object hucreselDeger = row[ay];
+        //            decimal? deger = null;
+        //            if (hucreselDeger != null)
+        //            {
+        //                deger = Convert.ToDecimal(hucreselDeger);
+        //            }
+
+        //            // Tarih oluştur: Yıl-Ay-Gün (Gün her zaman 01 olacak)
+        //            DateTime tarih = new DateTime(yil, ay, 1);
+
+        //            // Sözlüğe ekle
+        //            birlesmisVeri.Add(tarih, deger);
+
+        //            // Bir sonraki aya geçin
+        //            ay++;
+        //        }
+        //    }
+
+        //    return birlesmisVeri;
+        //}
+
+       
         public List<DateTime> CalculateAssetDate(AssetResultDTO asset)
         {
             List<List<object>> assetExcelFileColumn = new List<List<object>>();
