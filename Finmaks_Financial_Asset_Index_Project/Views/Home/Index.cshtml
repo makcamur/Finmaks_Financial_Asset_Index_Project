@@ -2,64 +2,65 @@
     ViewData["Title"] = "Finmaks Financial Index Asset";
 }
 <style>
-    /* Form Container */
+    /* Genel stil ayarları */
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    /* Formun konteynerini ortala */
     #start {
-        max-width: 600px; /* İstediğiniz genişliği ayarlayabilirsiniz */
-        margin: 0 auto; /* Ortalama formu sayfanın ortasına */
+        max-width: 400px;
+        margin: 0 auto;
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
+        background-color: #f9f9f9;
     }
 
-    /* Form Group */
+    /* Form öğelerinin stilleri */
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
 
-    /* Label Styles */
     label {
         font-weight: bold;
     }
 
-    /* Input Styles */
-    .form-control {
+    input[type="file"] {
+        display: block;
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    input[type="date"] {
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    button {
+        display: block;
         width: 100%;
         padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    /* File Input Styles */
-    .form-control-file {
-        width: 100%;
-    }
-
-    /* Button Styles */
-    .btn-primary {
         background-color: #007bff;
         color: #fff;
-        padding: 10px 20px;
         border: none;
-        border-radius: 5px;
+        border-radius: 3px;
         cursor: pointer;
     }
 
-    /* Table Styles for afterProcess */
-    #afterProcess table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
+        button:hover {
+            background-color: #0056b3;
+        }
 
-    #afterProcess table, #afterProcess th, #afterProcess td {
-        border: 1px solid #ccc;
-        padding: 10px;
-    }
-
-    #afterProcess th {
-        background-color: #f2f2f2;
-        text-align: left;
-    }</style>
+    /* Sonuç bölgesi stil ayarı */
+   
+</style>
 <div id="start">
     <form method="post" enctype="multipart/form-data" action="/YourController/ProcessForm">
         </br>
@@ -109,23 +110,19 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                var redirectToUrl = '@Url.Action("GetPartial", "Home")'; // ActionName ve ControllerName'i kendi projenize göre ayarlayın
-                // Elde edilen veriyi JSON formatına çevirip URL'ye query parametresi olarak ekleyin
+                var redirectToUrl = '@Url.Action("GetPartial", "Home")'; 
                 var jsonData = JSON.stringify(data);
                 redirectToUrl += '?jsonData=' + encodeURIComponent(jsonData);
-                // Yönlendirmeyi gerçekleştirin ve sonucu #afterProcess id'li div'e yerleştirin
                 $.ajax({
                     url: redirectToUrl,
                     type: 'GET',
                     success: function (partialViewResult) {
-                        // Kısmi görünümü #afterProcess id'li div'e yerleştirin
                         $('#afterProcess').html(partialViewResult);
                     },
                     error: function (error) {
                         console.log(error);
                     }
                 });
-
             },
             error: function (error) {
                 console.log(error);
@@ -133,5 +130,4 @@
         });
 
     }
-  
 </script>

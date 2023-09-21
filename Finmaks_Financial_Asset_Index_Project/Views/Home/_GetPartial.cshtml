@@ -11,7 +11,21 @@
         text-align: left;
     }
 </style>
-
+@functions {
+    string FormatDate(DateTime currentDate, DateTime previousDate)
+    {
+        if (currentDate.Month == DateTime.Now.Month && currentDate.Year == DateTime.Now.Year)
+        {
+            // Eğer içinde bulunduğumuz aydaysak gün bilgisini ekleyin
+            return currentDate.ToString("dd.MM.yyyy");
+        }
+        else
+        {
+            // İçinde bulunduğumuz ayın dışındaysak sadece yıl ve ayı gösterin
+            return currentDate.ToString("MMMM yyyy");
+        }
+    }
+}
 <table>
     <thead>
         <tr>
@@ -37,8 +51,10 @@
     <tbody>
         @for (int i = 0; i < Model.dateTimes.Count; i++)
         {
+            var currentDate = Model.dateTimes[i];
+            var previousDate = i > 0 ? Model.dateTimes[i - 1] : currentDate; // Önceki tarihi kontrol etmek için
             <tr>
-                <td>@Model.dateTimes[i].ToString("dd.MM.yyyy")</td>
+                <td>@FormatDate(currentDate, previousDate)</td>
                 <td>@String.Format("{0:C}", Model.Assets[i])</td>
                 <td>@((Model.IncreaseInAssetsComparedToThePreviousMonth[i] * 100).ToString("0.00"))%</td>
                 <td>@((Model.AssetTurnoverRatio[i] * 100).ToString("0.00"))%</td>
@@ -56,3 +72,4 @@
         }
     </tbody>
 </table>
+

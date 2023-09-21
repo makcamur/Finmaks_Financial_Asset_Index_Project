@@ -25,7 +25,6 @@ namespace Finmaks_Financial_Asset_Index_Project.Controllers
         public IActionResult GetPartial(string jsonData)
         {
             var model = JsonConvert.DeserializeObject<AssetIndexExchangeFinalTableDTO>(jsonData);
-
             return PartialView("_GetPartial", model);
         }
 
