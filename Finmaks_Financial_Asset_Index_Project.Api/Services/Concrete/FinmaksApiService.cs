@@ -308,7 +308,22 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 {
                     for (int i = 0; i < assetDates.Count; i++)
                     {
-                        var exchangeExcel = _unitOfWorksRepository.ExchangeRepository.Get(x => x.CurrentDate.Month == assetDates[i].Month && x.CurrentDate.Day == assetDates[i].Day && x.CurrentDate.Year == assetDates[i].Year && x.BaseCurrencyCode == 1 && x.ForeignCurrencyCode == 56);
+                        DateTime today = DateTime.Today; // Şu anki tarih
+                        var excelExchangeAll = _unitOfWorksRepository.ExchangeRepository.GetAll();
+                        Exchange exchangeExcel = null;
+
+                        if (assetDates[i].Year == today.Year && assetDates[i].Month == today.Month)
+                        {
+                            // İçinde bulunduğumuz aydaysak, bugünkü tarihle ilgili kur bilgisi
+                            exchangeExcel = excelExchangeAll.FirstOrDefault(x => x.CurrentDate.Year == today.Year && x.CurrentDate.Month == today.Month && x.CurrentDate.Day == today.Day && x.BaseCurrencyCode == 1 && x.ForeignCurrencyCode == 56);
+                        }
+                        else
+                        {
+                            // Ayın son gününün kur bilgisi
+                            DateTime sonGun = new DateTime(assetDates[i].Year, assetDates[i].Month, DateTime.DaysInMonth(assetDates[i].Year, assetDates[i].Month));
+                            exchangeExcel = excelExchangeAll.FirstOrDefault(x => x.CurrentDate.Year == assetDates[i].Year && x.CurrentDate.Month == assetDates[i].Month && x.CurrentDate.Day == sonGun.Day && x.BaseCurrencyCode == 1 && x.ForeignCurrencyCode == 56);
+                        }
+
                         if (exchangeExcel != null)
                         {
                             if (exchangeResultDTO.Data == null)
@@ -335,7 +350,6 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 exchangeResultDTO.ErrorMessage = ex.Message;
             }
             return exchangeResultDTO;
-
         }
         /// <summary>
         /// Verilen varlık, endeks ve döviz verileri kullanarak final bir tabloyu hesaplar.
