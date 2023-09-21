@@ -355,157 +355,229 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
         }
         public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındexValue, ExchangeResultDTO exchange)
         {
-            List<List<object>> assetExcelFileColumn = new List<List<object>>();
-
-            for (int columnIndex = 0; columnIndex < asset.Data.Columns.Count; columnIndex++)
-            {
-                // Her sütunun verilerini saklamak için bir liste oluşturun
-                List<object> columnData = new List<object>();
-
-                for (int rowIndex = 0; rowIndex < asset.Data.Rows.Count; rowIndex++)
-                {
-                    // Sütundaki veriyi alın ve listeye ekleyin
-                    object cellValue = asset.Data.Rows[rowIndex][columnIndex];
-                    columnData.Add(cellValue);
-                }
-
-                // Sütunun verilerini genel listeye ekleyin
-                assetExcelFileColumn.Add(columnData);
-            }
+           
 
             AssetIndexExchangeFinalTableDTO dto = new AssetIndexExchangeFinalTableDTO();
 
 
-            // Final Table için tarih sütununun alınması
-            dto.dateTimes = assetExcelFileColumn[0].Select(item =>
+            try
             {
-                if (DateTime.TryParse((string?)item, out DateTime dateTime))
+                List<List<object>> assetExcelFileColumn = new List<List<object>>();
+
+                for (int columnIndex = 0; columnIndex < asset.Data.Columns.Count; columnIndex++)
                 {
-                    return dateTime;
-                }
-                // Dönüşüm başarısız olursa varsayılan bir değer kullanabilirsiniz.
-                // Örneğin, DateTime.MinValue veya null.
-                return DateTime.MinValue;
-            }).ToList();
+                    // Her sütunun verilerini saklamak için bir liste oluşturun
+                    List<object> columnData = new List<object>();
 
-
-            // Final Table için varlık tarih varlık  tutarları sütununun alınması
-            dto.Assets = assetExcelFileColumn[1].Select(item =>
-            {
-                if (decimal.TryParse((string?)item, out decimal decimalValue))
-                {
-                    return decimalValue;
-                }
-                else
-                {
-                    // Dönüşüm başarısız olduğunda nasıl bir işlem yapılacağını burada belirleyebilirsiniz.
-                    // Örneğin, hata işleme veya varsayılan bir değer atama.
-                    return 0; // Varsayılan değer
-                }
-            }).ToList();
-
-            //Final Table için Önceki Aya Göre Varlık Artış Sütünunun alınması 
-            dto.IncreaseInAssetsComparedToThePreviousMonth = new List<decimal>();
-
-            for (int i = 0; i < dto.Assets.Count; i++)
-            {
-                if (i == 0)
-                {
-                    dto.IncreaseInAssetsComparedToThePreviousMonth.Add(0);
-                }
-                if (i != 0)
-                {
-                    var value = (dto.Assets[i] - dto.Assets[i - 1]) / dto.Assets[i - 1];
-                    dto.IncreaseInAssetsComparedToThePreviousMonth.Add(value);
-                }
-
-            }
-            // Final Table için Varlık Değişim Oranı Sütünunun alınması
-            dto.AssetTurnoverRatio = new List<decimal>();
-            for (int i = 0; i < dto.Assets.Count; i++)
-            {
-                var value = (dto.Assets[dto.Assets.Count - 1] - dto.Assets[i]) / dto.Assets[i];
-                dto.AssetTurnoverRatio.Add(value);
-
-            }
-
-
-            // Final Table için Varlık Tarih Dolar Kuru Sütünunun alınması
-            dto.AssetHistoricalExchangeRate = new List<decimal>();
-
-            exchange.Data.ForEach(item =>
-            {
-                dto.AssetHistoricalExchangeRate.Add(item.CashExchangeRate);
-            });
-
-            //Final Table için Dolarizasyon Varlık Tutarı Sütünunun alınması
-            dto.DollarizationAssetAmount = new List<decimal>();
-            for (int i = 0; i < dto.Assets.Count; i++)
-            {
-                var value = dto.AssetHistoricalExchangeRate[dto.Assets.Count - 1] / dto.AssetHistoricalExchangeRate[i] * dto.Assets[i];
-                dto.DollarizationAssetAmount.Add(value);
-            }
-
-
-            //Final Table için Dolarizasyon Önceki Aya Göre Varlık Artış Sütünunun alınması
-            dto.DollarizationIncreaseComparedToThePreviousMonth = new List<decimal>();
-            for (int i = 0; i < dto.DollarizationAssetAmount.Count; i++)
-            {
-                if (i == 0)
-                {
-                    dto.DollarizationIncreaseComparedToThePreviousMonth.Add(0);
-                }
-                if (i != 0)
-                {
-                    var value = (dto.DollarizationAssetAmount[i] - dto.DollarizationAssetAmount[i - 1]) / dto.DollarizationAssetAmount[i - 1];
-                    dto.DollarizationIncreaseComparedToThePreviousMonth.Add(value);
-                }
-
-            }
-
-            //Final Table için Dolarizasyon Varlık Değişim Oranı Sütünunun alınması
-            dto.DollarizationAssetTurnoverRate = new List<decimal>();
-            for (int i = 0; i < dto.DollarizationAssetAmount.Count; i++)
-            {
-                var value = (dto.DollarizationAssetAmount[dto.DollarizationAssetAmount.Count - 1] - dto.DollarizationAssetAmount[i]) / dto.DollarizationAssetAmount[i];
-                dto.DollarizationAssetTurnoverRate.Add(value);
-            }
-            //Final Table için Dolarizasyon Etkisi Yüzde Sütünunun alınması
-            dto.DollarizationImpactPercentage = new List<decimal>();
-            for (int i = 0; i < dto.DollarizationAssetAmount.Count; i++)
-            {
-                var value = (dto.Assets[i] - dto.DollarizationAssetAmount[i]) / dto.DollarizationAssetAmount[i];
-                dto.DollarizationImpactPercentage.Add(value);
-            }
-
-            // Örnek bir IndexResultDTO örneği oluşturuyoruz.
-            IndexResultDTO result = new IndexResultDTO
-            {
-                Success = true,
-                Message = "Veriler başarıyla işlendi.",
-                Data = ındexValue.Data, // Excel verilerinizi içeren DataTable burada olmalı.
-                Indices = new List<IndexEntity>()
-            };
-
-            // Excel verilerini dönüştürüyoruz ve IndexResultDTO'ya atıyoruz.
-            for (int rowIndex = 0; rowIndex < result.Data.Rows.Count; rowIndex++)
-            {
-                int year = Convert.ToInt32(result.Data.Rows[rowIndex][0]); // İlk sütun yıl bilgisini içeriyor.
-
-                for (int month = 1; month <= 12; month++)
-                {
-                    decimal indexValue = Convert.ToDecimal(result.Data.Rows[rowIndex][month]); // İlgili ayın değeri (decimal) bu sütunda bulunuyor.
-                    DateTime date = new DateTime(year, month, 1);
-
-                    result.Indices.Add(new IndexEntity
+                    for (int rowIndex = 0; rowIndex < asset.Data.Rows.Count; rowIndex++)
                     {
-                        Date = date,
-                        IndexValue = indexValue
-                    });
-                } 
+                        // Sütundaki veriyi alın ve listeye ekleyin
+                        object cellValue = asset.Data.Rows[rowIndex][columnIndex];
+                        columnData.Add(cellValue);
+                    }
 
+                    // Sütunun verilerini genel listeye ekleyin
+                    assetExcelFileColumn.Add(columnData);
+                }
+                // Final Table için tarih sütununun alınması
+                dto.dateTimes = assetExcelFileColumn[0].Select(item =>
+                {
+                    if (DateTime.TryParse((string?)item, out DateTime dateTime))
+                    {
+                        return dateTime;
+                    }
+                    // Dönüşüm başarısız olursa varsayılan bir değer kullanabilirsiniz.
+                    // Örneğin, DateTime.MinValue veya null.
+                    return DateTime.MinValue;
+                }).ToList();
+
+
+                // Final Table için varlık tarih varlık  tutarları sütununun alınması
+                dto.Assets = assetExcelFileColumn[1].Select(item =>
+                {
+                    if (decimal.TryParse((string?)item, out decimal decimalValue))
+                    {
+                        return decimalValue;
+                    }
+                    else
+                    {
+                        // Dönüşüm başarısız olduğunda nasıl bir işlem yapılacağını burada belirleyebilirsiniz.
+                        // Örneğin, hata işleme veya varsayılan bir değer atama.
+                        return 0; // Varsayılan değer
+                    }
+                }).ToList();
+
+                //Final Table için Önceki Aya Göre Varlık Artış Sütünunun alınması 
+                dto.IncreaseInAssetsComparedToThePreviousMonth = new List<decimal>();
+
+                for (int i = 0; i < dto.Assets.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        dto.IncreaseInAssetsComparedToThePreviousMonth.Add(0);
+                    }
+                    if (i != 0)
+                    {
+                        var value = (dto.Assets[i] - dto.Assets[i - 1]) / dto.Assets[i - 1];
+                        dto.IncreaseInAssetsComparedToThePreviousMonth.Add(value);
+                    }
+
+                }
+                // Final Table için Varlık Değişim Oranı Sütünunun alınması
+                dto.AssetTurnoverRatio = new List<decimal>();
+                for (int i = 0; i < dto.Assets.Count; i++)
+                {
+                    var value = (dto.Assets[dto.Assets.Count - 1] - dto.Assets[i]) / dto.Assets[i];
+                    dto.AssetTurnoverRatio.Add(value);
+
+                }
+
+
+                // Final Table için Varlık Tarih Dolar Kuru Sütünunun alınması
+                dto.AssetHistoricalExchangeRate = new List<decimal>();
+
+                exchange.Data.ForEach(item =>
+                {
+                    dto.AssetHistoricalExchangeRate.Add(item.CashExchangeRate);
+                });
+
+                //Final Table için Dolarizasyon Varlık Tutarı Sütünunun alınması
+                dto.DollarizationAssetAmount = new List<decimal>();
+                for (int i = 0; i < dto.Assets.Count; i++)
+                {
+                    var value = dto.AssetHistoricalExchangeRate[dto.Assets.Count - 1] / dto.AssetHistoricalExchangeRate[i] * dto.Assets[i];
+                    dto.DollarizationAssetAmount.Add(value);
+                }
+
+
+                //Final Table için Dolarizasyon Önceki Aya Göre Varlık Artış Sütünunun alınması
+                dto.DollarizationIncreaseComparedToThePreviousMonth = new List<decimal>();
+                for (int i = 0; i < dto.DollarizationAssetAmount.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        dto.DollarizationIncreaseComparedToThePreviousMonth.Add(0);
+                    }
+                    if (i != 0)
+                    {
+                        var value = (dto.DollarizationAssetAmount[i] - dto.DollarizationAssetAmount[i - 1]) / dto.DollarizationAssetAmount[i - 1];
+                        dto.DollarizationIncreaseComparedToThePreviousMonth.Add(value);
+                    }
+
+                }
+
+                //Final Table için Dolarizasyon Varlık Değişim Oranı Sütünunun alınması
+                dto.DollarizationAssetTurnoverRate = new List<decimal>();
+                for (int i = 0; i < dto.DollarizationAssetAmount.Count; i++)
+                {
+                    var value = (dto.DollarizationAssetAmount[dto.DollarizationAssetAmount.Count - 1] - dto.DollarizationAssetAmount[i]) / dto.DollarizationAssetAmount[i];
+                    dto.DollarizationAssetTurnoverRate.Add(value);
+                }
+                //Final Table için Dolarizasyon Etkisi Yüzde Sütünunun alınması
+                dto.DollarizationImpactPercentage = new List<decimal>();
+                for (int i = 0; i < dto.DollarizationAssetAmount.Count; i++)
+                {
+                    var value = (dto.Assets[i] - dto.DollarizationAssetAmount[i]) / dto.DollarizationAssetAmount[i];
+                    dto.DollarizationImpactPercentage.Add(value);
+                }
+                //Final Tablo için Üfe Endeks Tutarı Sütünunun alınması  
+                var allIndex = GetIndicesFromDataTable(ındexValue.Data);
+                dto.ProducerPriceIndex = new List<decimal>();
+                for (int i = 0; i < dto.Assets.Count; i++)
+                {
+                    var existIndex = allIndex.Indices.Where(x => x.Date.Month == dto.dateTimes[i].Month && x.Date.Year == dto.dateTimes[i].Year).FirstOrDefault();
+                    if (existIndex != null)
+                    {
+                        dto.ProducerPriceIndex.Add(Convert.ToDecimal(existIndex.IndexValue));
+                    }
+
+
+
+                }
+                //Enflasyon Varlık Tutarı Sütünunun alınması
+                dto.InflationAssetValue = new List<decimal>();
+                for (int i = 0; i < dto.Assets.Count; i++)
+                {
+                    var value = dto.ProducerPriceIndex[dto.ProducerPriceIndex.Count - 1] / dto.ProducerPriceIndex[i] * dto.Assets[i];
+                    dto.InflationAssetValue.Add(value);
+                }
+
+                //Enflasyon Önceki Aya Göre Varlık Artış Sütünunun alınması
+                dto.InflationAssetIncreaseComparedToThePreviousMonth = new List<decimal>();
+                for (int i = 0; i < dto.InflationAssetValue.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        dto.InflationAssetIncreaseComparedToThePreviousMonth.Add(0);
+                    }
+                    if (i != 0)
+                    {
+                        var value = (dto.InflationAssetValue[i] - dto.InflationAssetValue[i - 1]) / dto.InflationAssetValue[i - 1];
+                        dto.InflationAssetIncreaseComparedToThePreviousMonth.Add(value);
+                    }
+
+                }
+                //Enflasyon Varlık Değişim Oranı Sütünunun alınması
+                dto.InflationAssetTurnoverRate = new List<decimal>();
+                for (int i = 0; i < dto.InflationAssetValue.Count; i++)
+                {
+                    var value = (dto.InflationAssetValue[dto.InflationAssetValue.Count - 1] - dto.InflationAssetValue[i]) / dto.InflationAssetValue[i];
+                    dto.InflationAssetTurnoverRate.Add(value);
+                }
+                //Enflasyon Etkisi Yüzde Sütünunun alınması
+                dto.InflationImpactPercentage = new List<decimal>();
+                for (int i = 0; i < dto.InflationAssetValue.Count; i++)
+                {
+                    var value = (dto.Assets[i] - dto.InflationAssetValue[i]) / dto.InflationAssetValue[i];
+                    dto.InflationImpactPercentage.Add(value);
+                }
+
+
+                dto.Success = true;
+                dto.Message = "Final Table Successfully Converted to Data Table";
+
+                
+            }
+            catch (Exception ex)
+            {
+
+                dto.Success = false;
+                dto.ErrorMessage = ex.Message;
+                dto.Message = "Final Table Successfully Converted to Data Table";
             }
             return dto;
+        }
+        public IndexResultDTO GetIndicesFromDataTable(DataTable dataTable)
+        {
+            IndexResultDTO result = new IndexResultDTO();
+
+            if (dataTable == null || dataTable.Rows.Count == 0)
+            {
+                result.Success = false;
+                result.Message = "No data available.";
+                return result;
+            }
+
+            Dictionary<DateTime, decimal?> birlesmisVeri = Birlestir(dataTable);
+
+            if (birlesmisVeri.Count == 0)
+            {
+                result.Success = false;
+                result.Message = "No valid index data available.";
+                return result;
+            }
+
+            result.Indices = birlesmisVeri.Select(kv => new IndexEntity
+            {
+                Date = kv.Key,
+                IndexValue = kv.Value ?? 0 // Null değerleri 0 olarak kabul ediyoruz
+            }).ToList();
+
+            result.Success = true;
+            result.Message = "Index data retrieved successfully.";
+            result.Data = dataTable;
+
+            return result;
         }
 
         public Dictionary<DateTime, decimal?> Birlestir(DataTable dataTable)
@@ -514,27 +586,44 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
 
             foreach (DataRow row in dataTable.Rows)
             {
-                // İlk sütun yılı temsil ediyor, ikinci sütun Ocak ayını, üçüncü sütun Şubat ayını vb. temsil ediyor.
                 int yil = Convert.ToInt32(row[0]);
                 int ay = 1;
+                int sonSutun = row.Table.Columns.Count - 1; // Son sütunun indeksi
 
                 while (ay <= 12)
                 {
-                    // Hücreyi alın ve null mu diye kontrol edin
                     object hucreselDeger = row[ay];
-                    decimal? deger = null;
-                    if (hucreselDeger != null)
+
+                    if (ay > sonSutun)
                     {
-                        deger = Convert.ToDecimal(hucreselDeger);
+                        break; // Son sütunu aştıysak döngüyü sonlandır
                     }
 
-                    // Tarih oluştur: Yıl-Ay-Gün (Gün her zaman 01 olacak)
-                    DateTime tarih = new DateTime(yil, ay, 1);
+                    decimal? deger = null;
 
-                    // Sözlüğe ekle
+                    if (hucreselDeger != DBNull.Value)
+                    {
+                        // Replace comma with period and then convert to decimal
+                        string valueStr = hucreselDeger.ToString();
+
+                        // Validate if the string is not empty before conversion
+                        if (!string.IsNullOrWhiteSpace(valueStr))
+                        {
+                            if (decimal.TryParse(valueStr, out decimal parsedValue))
+                            {
+                                deger = parsedValue;
+                            }
+                            else
+                            {
+                                // Handle the case where the string is not a valid decimal
+                                // You can log an error or take some other appropriate action here.
+                            }
+                        }
+                    }
+
+                    DateTime tarih = new DateTime(yil, ay, 1);
                     birlesmisVeri.Add(tarih, deger);
 
-                    // Bir sonraki aya geçin
                     ay++;
                 }
             }
