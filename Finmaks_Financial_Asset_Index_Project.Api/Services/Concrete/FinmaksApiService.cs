@@ -428,7 +428,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                 dto.AssetTurnoverRatio.Add(value);
 
             }
-           
+
 
             // Final Table için Varlık Tarih Dolar Kuru Sütünunun alınması
             dto.AssetHistoricalExchangeRate = new List<decimal>();
@@ -442,10 +442,10 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             dto.DollarizationAssetAmount = new List<decimal>();
             for (int i = 0; i < dto.Assets.Count; i++)
             {
-                var value = dto.AssetHistoricalExchangeRate[dto.Assets.Count-1]/dto.AssetHistoricalExchangeRate[i]*dto.Assets[i];
+                var value = dto.AssetHistoricalExchangeRate[dto.Assets.Count - 1] / dto.AssetHistoricalExchangeRate[i] * dto.Assets[i];
                 dto.DollarizationAssetAmount.Add(value);
             }
-             
+
 
             //Final Table için Dolarizasyon Önceki Aya Göre Varlık Artış Sütünunun alınması
             dto.DollarizationIncreaseComparedToThePreviousMonth = new List<decimal>();
@@ -502,51 +502,47 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                         Date = date,
                         IndexValue = indexValue
                     });
-                }
+                } 
 
-
-                var test = dto;
-          
+            }
             return dto;
+        }
 
+        public Dictionary<DateTime, decimal?> Birlestir(DataTable dataTable)
+        {
+            Dictionary<DateTime, decimal?> birlesmisVeri = new Dictionary<DateTime, decimal?>();
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                // İlk sütun yılı temsil ediyor, ikinci sütun Ocak ayını, üçüncü sütun Şubat ayını vb. temsil ediyor.
+                int yil = Convert.ToInt32(row[0]);
+                int ay = 1;
+
+                while (ay <= 12)
+                {
+                    // Hücreyi alın ve null mu diye kontrol edin
+                    object hucreselDeger = row[ay];
+                    decimal? deger = null;
+                    if (hucreselDeger != null)
+                    {
+                        deger = Convert.ToDecimal(hucreselDeger);
+                    }
+
+                    // Tarih oluştur: Yıl-Ay-Gün (Gün her zaman 01 olacak)
+                    DateTime tarih = new DateTime(yil, ay, 1);
+
+                    // Sözlüğe ekle
+                    birlesmisVeri.Add(tarih, deger);
+
+                    // Bir sonraki aya geçin
+                    ay++;
+                }
+            }
+
+            return birlesmisVeri;
         }
 
 
-        //public Dictionary<DateTime, decimal?> Birlestir(DataTable dataTable)
-        //{
-        //    Dictionary<DateTime, decimal?> birlesmisVeri = new Dictionary<DateTime, decimal?>();
-
-        //    foreach (DataRow row in dataTable.Rows)
-        //    {
-        //        // İlk sütun yılı temsil ediyor, ikinci sütun Ocak ayını, üçüncü sütun Şubat ayını vb. temsil ediyor.
-        //        int yil = Convert.ToInt32(row[0]);
-        //        int ay = 1;
-
-        //        while (ay <= 12)
-        //        {
-        //            // Hücreyi alın ve null mu diye kontrol edin
-        //            object hucreselDeger = row[ay];
-        //            decimal? deger = null;
-        //            if (hucreselDeger != null)
-        //            {
-        //                deger = Convert.ToDecimal(hucreselDeger);
-        //            }
-
-        //            // Tarih oluştur: Yıl-Ay-Gün (Gün her zaman 01 olacak)
-        //            DateTime tarih = new DateTime(yil, ay, 1);
-
-        //            // Sözlüğe ekle
-        //            birlesmisVeri.Add(tarih, deger);
-
-        //            // Bir sonraki aya geçin
-        //            ay++;
-        //        }
-        //    }
-
-        //    return birlesmisVeri;
-        //}
-
-       
         public List<DateTime> CalculateAssetDate(AssetResultDTO asset)
         {
             List<List<object>> assetExcelFileColumn = new List<List<object>>();
@@ -588,3 +584,4 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
 
     }
 }
+
