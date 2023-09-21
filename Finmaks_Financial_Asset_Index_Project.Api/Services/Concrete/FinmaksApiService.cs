@@ -165,6 +165,13 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                     $"Error occured while getting data from Finmaks API. Status Code: {response.StatusCode} - {response.ReasonPhrase} - {responseContent}");
             }
         }
+        /// <summary>
+        /// Bu fonksiyon, gelen bir DataDTO nesnesi içindeki Excel dosyasını okuyarak bu veriyi bir AssetResultDTO nesnesi içinde döndürmeyi amaçlar.
+        /// Excel dosyasının içeriği bir veri tablosuna aktarılır ve işlev sonucunda, bu veri tablosu result.Data özelliği altında döndürülür.
+        /// Fonksiyon, istisnai durumlar oluştuğunda hata mesajları ile birlikte AssetResultDTO nesnesini döndürür.
+        /// </summary>
+        /// <param name="data">Excel dosyasını içeren bir DataDTO nesnesi.</param>
+        /// <returns>Excel dosyasının okunması ve işlenmesi sonucu elde edilen sonuçları içeren AssetResultDTO nesnesi.</returns>
         public AssetResultDTO GetAsset(DataDTO data)
         {
             AssetResultDTO result = new AssetResultDTO();
@@ -206,16 +213,13 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                         {
                             result.Success = false;
                             result.ErrorMessage = "No Work Sheet available in Excel File";
-                            return result; // Return early with an error result
+                            return result; 
                         }
                     }
                 }
-
-                // Your existing code for processing the asset data
-
                 result.Success = true;
                 result.Message = "Excel Successfully Converted to Data Table";
-                result.Data = table; // Assign your data here
+                result.Data = table; 
             }
             catch (Exception ex)
             {
@@ -225,6 +229,11 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             var test = result.Data;
             return result;
         }
+        /// <summary>
+        /// Spesifik Şekilde hazırlanmış olan Excel dosyasını okuyarak içeriğini bir DataTable'e dönüştüren metot.
+        /// </summary>
+        /// <param name="data">Excel dosyasının verilerini içeren DataDTO nesnesi.</param>
+        /// <returns>IndexResultDTO nesnesi içinde işlem sonucu ve veri tablosu.</returns>
         public IndexResultDTO GetIndex(DataDTO data)
         {
             IndexResultDTO result = new IndexResultDTO();
@@ -284,21 +293,10 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             return result;
         }
         /// <summary>
-        /// Önce verilen varlık (AssetResultDTO) üzerinde işlem yapılabilmesi için varlık tarihlerini hesaplar (CalculateAssetDate metodu kullanılır).
-        /// Ardından, her bir tarih için (item) belirli bir döviz kuru almak için bir döngü kullanır.
-        /// Bu döviz kurlarını almak için _unitOfWorksRepository.ExchangeRepository.Get metodu kullanılır. Bu metod, belirli bir tarih (item),
-        /// temel para birimi kodu (BaseCurrencyCode) 1 (dolar) ve yabancı para birimi kodu (ForeignCurrencyCode) 56 (Türk Lirası) olan döviz
-        /// kurlarını getirir ve bunları exchangeResultDTO.Data koleksiyonuna ekler.
-        /// Eğer varlık tarihleri (assetDates) null ise veya bir hata oluşursa, metot hata mesajını ayarlar (exchangeResultDTO.Success = false ve
-        /// exchangeResultDTO.ErrorMessage) ve işlemi sonlandırır.
-        /// Eğer her şey başarılı bir şekilde tamamlanırsa, metot başarılı olduğunu belirtir (exchangeResultDTO.Success = true) ve bir başarı
-        /// mesajı ayarlar (exchangeResultDTO.Message).
-        /// Eğer herhangi bir hata oluşursa (örneğin, bir istisna fırlatılırsa), hata mesajını yakalar ve exchangeResultDTO içinde hata mesajını ayarlar.
-        /// Sonuç olarak, bu metod bir varlık için belirli tarihlerde döviz kurlarını almayı amaçlar ve sonucu bir ExchangeResultDTO nesnesi içinde döner.
-        /// Başlangıç para birimi kodu 1 (dolar) ve hedef para birimi kodu 56 (Türk Lirası) olarak belirlenmiştir.
+        /// Verilen varlık bilgilerine göre döviz değişim verilerini alır.
         /// </summary>
-        /// <param name="asset"></param>
-        /// <returns></returns>
+        /// <param name="asset">Döviz değişim verileri alınacak varlık bilgileri.</param>
+        /// <returns>Döviz değişim verilerini içeren ExchangeResultDTO nesnesi.</returns>
         public ExchangeResultDTO GetExchange(AssetResultDTO asset)
         {
             var assetDates = CalculateAssetDate(asset);
@@ -339,6 +337,13 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             return exchangeResultDTO;
 
         }
+        /// <summary>
+        /// Verilen varlık, endeks ve döviz verileri kullanarak final bir tabloyu hesaplar.
+        /// </summary>
+        /// <param name="asset">Varlık verilerini içeren AssetResultDTO nesnesi.</param>
+        /// <param name="ındexValue">Endeks verilerini içeren IndexResultDTO nesnesi.</param>
+        /// <param name="exchange">Döviz verilerini içeren ExchangeResultDTO nesnesi.</param>
+        /// <returns>AssetIndexExchangeFinalTableDTO türünde hesaplanan final tablo.</returns>
         public AssetIndexExchangeFinalTableDTO CalculateFinalTable(AssetResultDTO asset, IndexResultDTO ındexValue, ExchangeResultDTO exchange)
         {
            
@@ -352,17 +357,13 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
 
                 for (int columnIndex = 0; columnIndex < asset.Data.Columns.Count; columnIndex++)
                 {
-                    // Her sütunun verilerini saklamak için bir liste oluşturun
                     List<object> columnData = new List<object>();
 
                     for (int rowIndex = 0; rowIndex < asset.Data.Rows.Count; rowIndex++)
                     {
-                        // Sütundaki veriyi alın ve listeye ekleyin
                         object cellValue = asset.Data.Rows[rowIndex][columnIndex];
                         columnData.Add(cellValue);
                     }
-
-                    // Sütunun verilerini genel listeye ekleyin
                     assetExcelFileColumn.Add(columnData);
                 }
                 // Final Table için tarih sütununun alınması
@@ -372,8 +373,6 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                     {
                         return dateTime;
                     }
-                    // Dönüşüm başarısız olursa varsayılan bir değer kullanabilirsiniz.
-                    // Örneğin, DateTime.MinValue veya null.
                     return DateTime.MinValue;
                 }).ToList();
 
@@ -387,8 +386,6 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                     }
                     else
                     {
-                        // Dönüşüm başarısız olduğunda nasıl bir işlem yapılacağını burada belirleyebilirsiniz.
-                        // Örneğin, hata işleme veya varsayılan bir değer atama.
                         return 0; // Varsayılan değer
                     }
                 }).ToList();
@@ -533,6 +530,11 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             }
             return dto;
         }
+        /// <summary>
+        /// Tablodan üfe endeks verilerini alır ve bir dto da birleştirir.
+        /// </summary>
+        /// <param name="dataTable">Endeks verilerini içeren DataTable nesnesi.</param>
+        /// <returns>İşlem sonucunu temsil eden IndexResultDTO nesnesi.</returns>
         public IndexResultDTO GetIndicesFromDataTable(DataTable dataTable)
         {
             IndexResultDTO result = new IndexResultDTO();
@@ -565,7 +567,16 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
 
             return result;
         }
-
+        /// <summary>
+        /// Verilen bir DataTable'ı kullanarak, her satırın yıl ve aylarına göre bir Dictionary oluşturan bir yöntem.
+        /// </summary>
+        /// <param name="dataTable">Veri çıkartılacak DataTable.</param>
+        /// <returns>DateTime anahtarları ve decimal? değerleri içeren bir Dictionary.</returns>
+        /// <remarks>
+        /// Bu yöntem, her satırın belirtilen sütunlarını bir DateTime anahtarıyla eşleştirir ve bu anahtara karşılık gelen
+        /// hücresel değerleri decimal? türünde bir değere çevirir. Eğer hücresel değerler geçerli bir decimal değilse, 
+        /// null olarak saklanır. Eğer bir hücresel değer boşsa veya DBNull.Value ise, o hücre null olarak kabul edilir.
+        /// </remarks>
         public Dictionary<DateTime, decimal?> Birlestir(DataTable dataTable)
         {
             Dictionary<DateTime, decimal?> birlesmisVeri = new Dictionary<DateTime, decimal?>();
@@ -574,25 +585,21 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
             {
                 int yil = Convert.ToInt32(row[0]);
                 int ay = 1;
-                int sonSutun = row.Table.Columns.Count - 1; // Son sütunun indeksi
-
+                int sonSutun = row.Table.Columns.Count - 1;
                 while (ay <= 12)
                 {
                     object hucreselDeger = row[ay];
 
                     if (ay > sonSutun)
                     {
-                        break; // Son sütunu aştıysak döngüyü sonlandır
+                        break; 
                     }
-
                     decimal? deger = null;
 
                     if (hucreselDeger != DBNull.Value)
                     {
-                        // Replace comma with period and then convert to decimal
                         string valueStr = hucreselDeger.ToString();
 
-                        // Validate if the string is not empty before conversion
                         if (!string.IsNullOrWhiteSpace(valueStr))
                         {
                             if (decimal.TryParse(valueStr, out decimal parsedValue))
@@ -601,8 +608,6 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                             }
                             else
                             {
-                                // Handle the case where the string is not a valid decimal
-                                // You can log an error or take some other appropriate action here.
                             }
                         }
                     }
@@ -616,40 +621,35 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
 
             return birlesmisVeri;
         }
-
-
+        /// <summary>
+        /// Verilen bir AssetResultDTO içindeki veri sütunlarından ilki olarak kabul edilen sütundaki DateTime değerlerini çıkarır ve bir liste olarak döndürür.
+        /// Dönüşüm başarısız olursa, varsayılan olarak DateTime.MinValue kullanılır.
+        /// </summary>
+        /// <param name="asset">Tarih verileri içeren AssetResultDTO nesnesi</param>
+        /// <returns>DateTime değerlerini içeren bir liste</returns>
         public List<DateTime> CalculateAssetDate(AssetResultDTO asset)
         {
             List<List<object>> assetExcelFileColumn = new List<List<object>>();
 
             for (int columnIndex = 0; columnIndex < asset.Data.Columns.Count; columnIndex++)
             {
-                // Her sütunun verilerini saklamak için bir liste oluşturun
                 List<object> columnData = new List<object>();
 
                 for (int rowIndex = 0; rowIndex < asset.Data.Rows.Count; rowIndex++)
                 {
-                    // Sütundaki veriyi alın ve listeye ekleyin
+                    
                     object cellValue = asset.Data.Rows[rowIndex][columnIndex];
                     columnData.Add(cellValue);
                 }
-
-                // Sütunun verilerini genel listeye ekleyin
                 assetExcelFileColumn.Add(columnData);
             }
-
             AssetIndexExchangeFinalTableDTO dto = new AssetIndexExchangeFinalTableDTO();
-
-
-            // assetExcelFileColumn[0]'ı dto.dateTimes'e eşitleme
             dto.dateTimes = assetExcelFileColumn[0].Select(item =>
             {
                 if (DateTime.TryParse((string?)item, out DateTime dateTime))
                 {
                     return dateTime;
                 }
-                // Dönüşüm başarısız olursa varsayılan bir değer kullanabilirsiniz.
-                // Örneğin, DateTime.MinValue veya null.
                 return DateTime.MinValue;
             }).ToList();
 

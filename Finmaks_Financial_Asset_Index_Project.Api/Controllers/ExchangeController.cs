@@ -24,19 +24,13 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Controllers
         {
             try
             {
+                var startDate = data.StartDate;
                 var lastdate = data.EndDate;
-
                 _finmaksApiService.MakeExchangesUpToDate(lastdate);
                 var asset = _finmaksApiService.GetAsset(data);
                 var index = _finmaksApiService.GetIndex(data);
                 var exchange = _finmaksApiService.GetExchange(asset);
-                var finalTable = _finmaksApiService.CalculateFinalTable(asset, index, exchange);
-
-                var result = new
-                {
-                    message = "Form verileri başarıyla işlendi.",
-
-                };
+                var finalTable = _finmaksApiService.CalculateFinalTable(asset, index, exchange);       
                 return Ok(finalTable);
             }
             catch (Exception ex)

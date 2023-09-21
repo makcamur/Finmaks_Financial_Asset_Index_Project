@@ -28,10 +28,6 @@ namespace Finmaks_Financial_Asset_Index_Project.Controllers
 
             return PartialView("_GetPartial", model);
         }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
