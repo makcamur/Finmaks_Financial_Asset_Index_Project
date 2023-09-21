@@ -19,55 +19,31 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Controllers
             _finmaksApiService = finmaksApiService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            DateTime startDate = new DateTime(2023, 08, 01);
-            var result = _finmaksApiService.GetFinmaksExchangeRates(startDate);
-            var jsonResult = JsonSerializer.Serialize(result);
-            return Ok(jsonResult);
-
-        }
-      
-
         [HttpPost("[action]")]
-        public IActionResult ProcessForm([FromForm]DataDTO data)
+        public IActionResult ProcessForm([FromForm] DataDTO data)
         {
             try
-            {             
-                var lastdate=data.EndDate;
+            {
+                var lastdate = data.EndDate;
 
                 _finmaksApiService.MakeExchangesUpToDate(lastdate);
-                var asset=_finmaksApiService.GetAsset(data);
-                var index=_finmaksApiService.GetIndex(data);
-                var exchange=_finmaksApiService.GetExchange(asset);   
-                var finalTable=_finmaksApiService.CalculateFinalTable(asset,index,exchange);
-                var test2 = 3;
-                //for (int i = 0; i < asset.Data.Rows.Count; i++)
-                //{
-                //    asset.Data.Rows[i].ItemArray.ToList<>
-                //}
-            
-
-                
-
+                var asset = _finmaksApiService.GetAsset(data);
+                var index = _finmaksApiService.GetIndex(data);
+                var exchange = _finmaksApiService.GetExchange(asset);
+                var finalTable = _finmaksApiService.CalculateFinalTable(asset, index, exchange);
 
                 var result = new
                 {
                     message = "Form verileri başarıyla işlendi.",
-                    // Ek sonuç verilerini burada ekleyebilirsiniz.
-                };
 
-               
-                // İşlem başarılı ise 200 OK yanıtı gönderin
-                return Ok(result);
+                };
+                return Ok(finalTable);
             }
             catch (Exception ex)
             {
-                // İşlem sırasında bir hata oluştuysa hata yanıtı gönderin
                 return BadRequest(new { error = ex.Message });
             }
         }
-  
+
     }
 }

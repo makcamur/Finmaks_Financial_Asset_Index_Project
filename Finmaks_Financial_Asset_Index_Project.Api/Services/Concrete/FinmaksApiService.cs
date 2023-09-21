@@ -165,20 +165,6 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
                     $"Error occured while getting data from Finmaks API. Status Code: {response.StatusCode} - {response.ReasonPhrase} - {responseContent}");
             }
         }
-        //public void GetAsset2(DataDTO data)
-        //{
-
-        //    var aa = table;
-        //    var be = aa.Rows;
-        //    Dictionary<string, string> dict = new Dictionary<string, string>();
-
-        //    for (int i = 7; i < be.Count; i++)
-        //    {
-        //        be[i].ItemArray[0].ToString();
-        //        dict.Add(be[i].ItemArray[0].ToString(), be[i].ItemArray[1].ToString());
-        //    }
-        //    var dict2 = dict;
-        //}
         public AssetResultDTO GetAsset(DataDTO data)
         {
             AssetResultDTO result = new AssetResultDTO();
@@ -669,6 +655,8 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Services.Concrete
 
             return dto.dateTimes;
         }
+
+
 
 
     }

@@ -1,4 +1,5 @@
-﻿using Finmaks_Financial_Asset_Index_Project.Models;
+﻿using Finmaks_Financial_Asset_Index_Project.DataAccess.Data.DTOs;
+using Finmaks_Financial_Asset_Index_Project.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

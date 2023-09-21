@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -6,5 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>d53128fd-6069-4d46-bfd5-e3b83b30f4eb</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Finmaks_Financial_Asset_Index_Project.Models\Finmaks_Financial_Asset_Index_Project.DataAccess.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -51,6 +51,7 @@
             processData: false,
             success: function (data) {
                 console.log(data);
+                PrintTable(data);
                 var afterProcessDiv = document.getElementById('afterProcess');
                 afterProcessDiv.innerHTML = "API'den gelen yanıt: " + JSON.stringify(data);
             },
@@ -60,4 +61,23 @@
         });
 
     }
+    function PrintTable(myData) {
+        var mvcUrl = "https://localhost:7028/"+"Home";
+        $.ajax({
+            url: mvcUrl,
+            type: 'POST',
+            data: myData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+                var afterProcessDiv = document.getElementById('afterProcess');
+                afterProcessDiv.innerHTML = "API'den gelen yanıt: " + JSON.stringify(data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+  
 </script>
