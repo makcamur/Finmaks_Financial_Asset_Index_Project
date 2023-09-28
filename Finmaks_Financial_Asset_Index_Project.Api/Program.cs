@@ -31,6 +31,27 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// db kurulmasý
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbContext = services.GetRequiredService<ApplicationDbContext>();
+        if (!dbContext.Database.CanConnect()) // Veritabanýna baðlanýlamýyorsa
+        {
+            dbContext.Database.Migrate(); // Veritabanýný oluþtur veya güncelle          
+            var finmaksApiService = services.GetRequiredService<IFinmaksApiService>();
+            var lastdateInterval = DateTime.Now; 
+            finmaksApiService.MakeExchangesUpToDate(lastdateInterval);
+        }
+    }
+    catch (Exception ex)
+    {
+        // Hata yönetimi burada yapýlabilir
+    }
+}
+
 // Hangfire'ý baþlatýn
 app.UseHangfireDashboard(); // Hangfire Dashboard'ý kullanmak isterseniz
 app.UseHangfireServer();

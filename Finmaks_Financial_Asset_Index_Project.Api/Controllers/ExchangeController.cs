@@ -18,6 +18,7 @@ namespace Finmaks_Financial_Asset_Index_Project.Api.Controllers
         {
             _finmaksApiService = finmaksApiService;
         }
+     
 
         [HttpPost("[action]")]
         public IActionResult ProcessForm([FromForm] DataDTO data)
